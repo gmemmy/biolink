@@ -14,5 +14,9 @@
     "nitrogen",
     "ios",
     "android"
+  ],
+  "references": [
+    { "path": "./packages/core-native" },
+    { "path": "./packages/js-wrapper" }
   ]
 }

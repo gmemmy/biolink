@@ -12,6 +12,9 @@ export default [
         ecmaVersion: 2020,
         sourceType: 'module',
       },
+      globals: {
+        console: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': tseslint,
@@ -37,6 +40,9 @@ export default [
       'ios/',
       'android/',
       '*.js',
+      '**/dist/**',
+      '**/build/**',
+      '**/lib/**',
     ],
   },
 ];

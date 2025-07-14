@@ -1,29 +1,37 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "rootDir": ".",
-    "baseUrl": ".",
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "node",
     "lib": ["ES2020"],
+    "declaration": true,
+    "outDir": "./lib",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": true,
+    "composite": true,
+    "incremental": true,
+    "baseUrl": ".",
     "paths": {
-      "packages/*": ["./packages/*"],
-      "@biolink/core-native": ["./packages/core-native/specs"]
+      "@biolink/core-native": ["packages/core-native/src"],
+      "@biolink/core-native/*": ["packages/core-native/src/*"],
+      "@biolink/js-wrapper": ["packages/js-wrapper/src"],
+      "@biolink/js-wrapper/*": ["packages/js-wrapper/src/*"]
     }
   },
-  "exclude": ["node_modules", "dist", "build"],
-  "references": [
-    {
-      "path": "./packages/core-native"
-    }
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "lib",
+    "nitrogen",
+    "ios",
+    "android"
   ]
 }
