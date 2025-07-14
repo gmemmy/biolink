@@ -1,0 +1,17 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": ["biolink", "core"],
+  "ios": {
+    "iosModulename": "BiolinkCore"
+  },
+  "android": {
+    "androidNamespace": ["biolink", "core"],
+    "androidCxxLibName": "BiolinkCore"
+  },
+  "autolinking": {
+    "BiolinkCore": {
+      "swift": "HybridBiolinkCore",
+      "kotlin": "HybridBiolinkCore"
+    }
+  }
+}

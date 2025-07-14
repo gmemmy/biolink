@@ -1,0 +1,46 @@
+{
+  "name": "@biolink/core-native",
+  "version": "0.1.0",
+  "description": "React Native Nitro Module for Biolink core native functionality",
+  "private": true,
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf lib nitrogen/generated",
+    "codegen": "nitro-codegen",
+    "test": "jest"
+  },
+  "keywords": [
+    "react-native",
+    "nitro",
+    "biolink",
+    "authentication",
+    "keychain"
+  ],
+  "dependencies": {
+    "react-native-nitro-modules": "^0.12.0"
+  },
+  "devDependencies": {
+    "nitro-codegen": "^0.12.0",
+    "@types/jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "typescript": "^5.2.0"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.74.0"
+  },
+  "files": [
+    "lib/",
+    "ios/",
+    "android/",
+    "nitrogen/",
+    "*.podspec",
+    "*.gradle"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/biolink/react-native-biolink-mono.git",
+    "directory": "packages/core-native"
+  }
+}
