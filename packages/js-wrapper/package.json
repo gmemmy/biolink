@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@biolink/core-native": "workspace:*",
+    "react-native-logs": "^5.0.0",
     "react-native-nitro-modules": "^0.14.0"
   },
   "devDependencies": {
