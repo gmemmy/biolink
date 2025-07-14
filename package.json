@@ -3,32 +3,41 @@
   "version": "1.0.0",
   "description": "React Native Biolink",
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces",
-    "test": "npm run test --workspaces",
+    "build": "pnpm -r run build",
+    "lint": "eslint . --fix",
+    "lint:check": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm -r run test",
+    "clean": "pnpm -r run clean",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "eslint": "^8.50.0",
+    "@eslint/js": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.0.0",
     "prettier": "^3.0.0",
-    "typescript": "^5.2.0"
+    "typescript": "^5.3.0"
   },
   "lint-staged": {
-    "*.{ts,js}": [
+    "**/*.{ts,tsx}": [
       "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{js,jsx,json,md}": [
       "prettier --write"
     ]
   },
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "pnpm@8.0.0"
-} 
+  "packageManager": "pnpm@10.0.0"
+}

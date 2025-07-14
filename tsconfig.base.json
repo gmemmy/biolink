@@ -16,12 +16,14 @@
     "declarationMap": true,
     "sourceMap": true,
     "paths": {
-      "packages/*": ["./packages/*"]
+      "packages/*": ["./packages/*"],
+      "@biolink/core-native": ["./packages/core-native/specs"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "dist",
-    "build"
+  "exclude": ["node_modules", "dist", "build"],
+  "references": [
+    {
+      "path": "./packages/core-native"
+    }
   ]
-} 
+}
