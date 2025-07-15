@@ -1,0 +1,127 @@
+import * as React from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  StatusBar,
+  useColorScheme,
+} from 'react-native';
+import { signInWithBiometrics, useAuth } from 'react-native-biolink';
+
+function App() {
+  const { isAuthenticated, error, isLoading } = useAuth();
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const handleAuthenticate = async () => {
+    try {
+      await signInWithBiometrics();
+    } catch (err) {
+      // Error is handled by the useAuth hook
+      console.error('Authentication failed:', err);
+    }
+  };
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? '#1a1a1a' : '#f5f5f5',
+  };
+
+  return (
+    <SafeAreaView style={[styles.container, backgroundStyle]}>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <View style={styles.content}>
+        <Text style={[styles.title, { color: isDarkMode ? '#fff' : '#333' }]}>
+          Biolink Demo
+        </Text>
+        <Text
+          style={[styles.subtitle, { color: isDarkMode ? '#ccc' : '#666' }]}
+        >
+          Biometric Authentication Demo
+        </Text>
+
+        <TouchableOpacity
+          style={[styles.button, isLoading && styles.buttonDisabled]}
+          onPress={handleAuthenticate}
+          disabled={isLoading}
+        >
+          <Text style={styles.buttonText}>
+            {isLoading ? 'Authenticating...' : 'Authenticate with Biometrics'}
+          </Text>
+        </TouchableOpacity>
+
+        <View style={styles.statusContainer}>
+          {isAuthenticated && (
+            <Text style={styles.successText}>
+              ✅ Authenticated Successfully
+            </Text>
+          )}
+          {error && <Text style={styles.errorText}>❌ {error}</Text>}
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 50,
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 12,
+    marginBottom: 30,
+    minWidth: 250,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  buttonDisabled: {
+    backgroundColor: '#ccc',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  statusContainer: {
+    alignItems: 'center',
+    minHeight: 60,
+  },
+  successText: {
+    fontSize: 18,
+    color: '#4CAF50',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: 16,
+    color: '#f44336',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+});
+
+export default App;
