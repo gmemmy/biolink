@@ -18,6 +18,7 @@
     "isolatedModules": true,
     "noEmit": false,
     "types": ["jest"],
+    "lib": ["ES2020", "DOM"],
     "baseUrl": ".",
     "paths": {
       "../specs/*": ["specs/*"],

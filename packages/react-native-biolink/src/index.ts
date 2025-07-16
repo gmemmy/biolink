@@ -84,12 +84,9 @@ export async function authenticate(
  * Store a secret securely using the native keychain/keystore
  * @param key - The key to store the secret under
  * @param value - The secret value to store
- * @returns Promise<boolean> - true if storage successful, false otherwise
+ * @returns Promise<void> - resolves on success, rejects on error
  */
-export async function storeSecret(
-  key: string,
-  value: string
-): Promise<boolean> {
+export async function storeSecret(key: string, value: string): Promise<void> {
   const logger = getLogger();
   const core = getCore();
 
@@ -97,21 +94,20 @@ export async function storeSecret(
     logger.debug(`Storing secret for key: ${key}`);
     await core.storeSecret(key, value);
     logger.info(`Secret stored successfully for key: ${key}`);
-    return true;
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error';
     logger.error(`Failed to store secret for key ${key}:`, errorMessage);
-    return false;
+    throw error;
   }
 }
 
 /**
  * Retrieve a secret from the native keychain/keystore
  * @param key - The key to retrieve the secret for
- * @returns Promise<string | null> - The secret value or null if not found
+ * @returns Promise<string | undefined> - The secret value or undefined if not found
  */
-export async function getSecret(key: string): Promise<string | null> {
+export async function getSecret(key: string): Promise<string | undefined> {
   const logger = getLogger();
   const core = getCore();
 
@@ -125,12 +121,12 @@ export async function getSecret(key: string): Promise<string | null> {
       logger.debug(`No secret found for key: ${key}`);
     }
 
-    return result ?? null;
+    return result;
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error';
     logger.error(`Failed to retrieve secret for key ${key}:`, errorMessage);
-    return null;
+    throw error;
   }
 }
 

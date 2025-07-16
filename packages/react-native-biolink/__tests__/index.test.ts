@@ -18,6 +18,8 @@ jest.mock('../src/logger', () => ({
 import {
   signInWithBiometrics,
   authenticate,
+  storeSecret,
+  getSecret,
   __setCoreForTesting,
 } from '../src/index';
 import type { BiolinkCore } from '../specs/BiolinkCore.nitro';
@@ -173,6 +175,60 @@ describe('BioLink Authentication', () => {
 
       expect(authenticateResult).toBe(signInResult);
       expect(mockCore.authenticate).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('storeSecret', () => {
+    it('calls native storeSecret and resolves on success', async () => {
+      (mockCore.storeSecret as jest.Mock).mockResolvedValue(undefined);
+      __setCoreForTesting(mockCore);
+
+      await expect(
+        storeSecret('testKey', 'testValue')
+      ).resolves.toBeUndefined();
+      expect(mockCore.storeSecret).toHaveBeenCalledWith('testKey', 'testValue');
+    });
+
+    it('propagates rejection when native storeSecret rejects', async () => {
+      const error = new Error('Storage failed');
+      (mockCore.storeSecret as jest.Mock).mockRejectedValue(error);
+      __setCoreForTesting(mockCore);
+
+      await expect(storeSecret('testKey', 'testValue')).rejects.toThrow(
+        'Storage failed'
+      );
+      expect(mockCore.storeSecret).toHaveBeenCalledWith('testKey', 'testValue');
+    });
+  });
+
+  describe('getSecret', () => {
+    it('calls native getSecret and returns the value on success', async () => {
+      (mockCore.getSecret as jest.Mock).mockResolvedValue('retrievedValue');
+      __setCoreForTesting(mockCore);
+
+      const result = await getSecret('testKey');
+
+      expect(result).toBe('retrievedValue');
+      expect(mockCore.getSecret).toHaveBeenCalledWith('testKey');
+    });
+
+    it('returns undefined when native getSecret returns undefined', async () => {
+      (mockCore.getSecret as jest.Mock).mockResolvedValue(undefined);
+      __setCoreForTesting(mockCore);
+
+      const result = await getSecret('nonExistentKey');
+
+      expect(result).toBeUndefined();
+      expect(mockCore.getSecret).toHaveBeenCalledWith('nonExistentKey');
+    });
+
+    it('propagates rejection when native getSecret rejects', async () => {
+      const error = new Error('Retrieval failed');
+      (mockCore.getSecret as jest.Mock).mockRejectedValue(error);
+      __setCoreForTesting(mockCore);
+
+      await expect(getSecret('testKey')).rejects.toThrow('Retrieval failed');
+      expect(mockCore.getSecret).toHaveBeenCalledWith('testKey');
     });
   });
 });

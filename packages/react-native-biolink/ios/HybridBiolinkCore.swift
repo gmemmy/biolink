@@ -54,11 +54,13 @@ public class HybridBiolinkCore: HybridBiolinkCoreSpec {
         os_log(.debug, log: .default, "BiolinkCore: storeSecret() called with key: %@", key)
         
         return Promise<Void>.async {
+            let bundleID = Bundle.main.bundleIdentifier ?? "com.biolink.default"
             let keychainQuery: [String: Any] = [
                 kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: bundleID,
                 kSecAttrAccount as String: key,
                 kSecValueData as String: value.data(using: .utf8)!,
-                kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+                kSecAttrAccessible as String: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
             ]
             
             // Delete any existing item first
@@ -81,8 +83,10 @@ public class HybridBiolinkCore: HybridBiolinkCoreSpec {
         os_log(.debug, log: .default, "BiolinkCore: getSecret() called with key: %@", key)
         
         return Promise<String?>.async {
+            let bundleID = Bundle.main.bundleIdentifier ?? "com.biolink.default"
             let keychainQuery: [String: Any] = [
                 kSecClass as String: kSecClassGenericPassword,
+                kSecAttrService as String: bundleID,
                 kSecAttrAccount as String: key,
                 kSecReturnData as String: true,
                 kSecMatchLimit as String: kSecMatchLimitOne
