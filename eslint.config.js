@@ -22,6 +22,12 @@ export default [
         beforeEach: 'readonly',
         afterEach: 'readonly',
         performance: 'readonly',
+        crypto: 'readonly',
+        TextEncoder: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
       },
     },
     plugins: {
@@ -39,6 +45,19 @@ export default [
     },
   },
   {
+    files: ['**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: 'module',
+      globals: {
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+      },
+    },
+  },
+  {
     ignores: [
       'node_modules/',
       'dist/',
@@ -47,7 +66,6 @@ export default [
       'nitrogen/',
       'ios/',
       'android/',
-      '*.js',
       '**/dist/**',
       '**/build/**',
       '**/lib/**',

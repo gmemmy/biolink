@@ -1,46 +1,156 @@
-# Biolink
+# React Native Biolink
 
-A high-performance React Native library for biometric authentication and secure data storage, built for the **New Architecture**.
+A **bridge-free** biometric authentication and secure storage library built on Nitro Modules for React Native 0.74+.
 
-## Requirements
+[![Nitro](https://img.shields.io/badge/Built_with-Nitro_Modules-blue?style=flat&logo=rocket)](https://nitro.margelo.com)
+[![React Native](https://img.shields.io/badge/React_Native-0.74+-blue?style=flat&logo=react)](https://reactnative.dev)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
 
-- React Native 0.70+ with New Architecture enabled
-- iOS 12.0+
-- Android API 23+
+## 🚀 Library Overview
 
-## Features
+**React Native Biolink** is a high-performance biometric authentication and secure storage library built on [Nitro Modules](https://nitro.margelo.com) for React Native's New Architecture. Unlike bridge-based libraries, Biolink uses Nitro's JSI implementation for **near-zero latency** native communication.
 
-- 🔐 Biometric authentication (Face ID, Touch ID, Fingerprint)
-- 🗝️ Secure keychain/keystore data storage
-- ⚡ Ultra-fast native performance (no bridge!)
-- 🏗️ Built for React Native's New Architecture
-- 🍎 iOS and Android support
+### What Makes It Special
 
-## Built with Nitro Modules
+- **🔗 Bridge-Free**: Direct JSI communication
+- **⚡ Ultra-Fast**: Near-zero call latency
+- **🔐 Hardware-Backed**: Secure Enclave (iOS) and TEE Keystore (Android)
+- **🎯 Type-Safe**: Full TypeScript with generated bindings
+- **🏗️ New Architecture Ready**: Built on Nitro Modules for React Native 0.74+
 
-This library is powered by [Nitro Modules](https://nitro.margelo.com) for maximum performance and seamless native integration.
+## ✨ Key Features & Benefits
 
-![Nitro](https://img.shields.io/badge/Built_with-Nitro_Modules-blue?style=flat&logo=rocket)
-
-## Quick Start
+### **Promise-Based API**
 
 ```typescript
-import { BiolinkCore } from 'react-native-biolink';
-
-// Authenticate with biometrics
-const isAuthenticated = await BiolinkCore.authenticate();
-
-// Store secure data
-await BiolinkCore.storeSecret('user-token', 'your-secret-data');
-
-// Retrieve secure data
-const secret = await BiolinkCore.getSecret('user-token');
+// Simple, unified API
+await authenticate(fallbackToDeviceCredential?: boolean)
+await storeSecret(key: string, value: string)
+const secret = await getSecret(key: string)
 ```
 
-## Demo
+### **Hardware-Backed Security**
 
-See the `packages/biolink-demo/` directory for a complete example implementation.
+- **iOS**: Secure Enclave with Face ID/Touch ID
+- **Android**: TEE Keystore
+- **Fallback**: Device credential (PIN/pattern)
+- **PIN Auth**: App-managed PIN with lockout
 
-## Documentation
+### **Headless Design**
 
-More comprehensive documentation coming soon.
+- **No Bundled UI**: Custom authentication flows
+- **Flexible**: Any UI framework
+- **React Hooks**: `useAuth()` for state management
+
+### **Performance Edge**
+
+- **JSI First**: Direct native communication
+- **Near-Zero Latency**: Millisecond operations
+- **Memory Efficient**: No bridge overhead
+
+### **Developer Experience**
+
+- **Pluggable Logging**: Customizable audit events
+- **Error Handling**: Comprehensive error types
+- **Testing Support**: Built-in utilities
+
+## 📋 Requirements
+
+- **React Native** ≥ 0.74 (New Architecture)
+- **react-native-nitro-modules**
+- **iOS** 11+ (Secure Enclave)
+- **Android** API 23+ (Biometric API)
+- **PNPM** or **Yarn** workspaces
+
+## 🛠️ Installation & Quickstart
+
+### 1. Install
+
+```bash
+# Add to workspace
+pnpm add react-native-biolink react-native-nitro-modules
+
+# Or with yarn
+yarn add react-native-biolink react-native-nitro-modules
+```
+
+### 2. Generate Bindings
+
+```bash
+# Run Nitrogen codegen
+npx nitrogen
+
+# Or with pnpm
+pnpm nitrogen
+```
+
+### 3. Rebuild Apps
+
+```bash
+# iOS
+cd ios && pod install && cd ..
+npx react-native run-ios
+
+# Android
+npx react-native run-android
+```
+
+### 4. Basic Usage
+
+```typescript
+import { authenticate, storeSecret, getSecret } from 'react-native-biolink';
+
+const handleLogin = async () => {
+  try {
+    const isAuthenticated = await authenticate(true); // with fallback
+
+    if (isAuthenticated) {
+      await storeSecret('user-token', 'your-secret-data');
+      const token = await getSecret('user-token');
+      console.log('Retrieved token:', token);
+    }
+  } catch (error) {
+    console.error('Authentication failed:', error);
+  }
+};
+```
+
+### 5. React Hook Usage
+
+```typescript
+import { useAuth } from 'react-native-biolink';
+
+function LoginScreen() {
+  const { isAuthenticated, error, isLoading, authenticate } = useAuth();
+
+  const handleBiometricAuth = () => {
+    authenticate(true); // with device credential fallback
+  };
+
+  return (
+    <Button
+      onPress={handleBiometricAuth}
+      disabled={isLoading}
+      title={isLoading ? 'Authenticating...' : 'Sign In with Biometrics'}
+    />
+  );
+}
+```
+
+## 📚 Next Steps & Documentation
+
+For detailed developer documentation, API reference, and advanced usage examples, see:
+
+**[📖 Developer Documentation →](./packages/react-native-biolink/README.md)**
+
+## 🎯 Demo App
+
+See the complete implementation in action:
+
+**[📱 Demo App Documentation →](./packages/biolink-demo/README.md)**
+
+## 📄 License
+
+MIT License - see [LICENSE](./LICENSE) for details.
+
+---
