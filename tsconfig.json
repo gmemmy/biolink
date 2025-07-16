@@ -15,8 +15,5 @@
     "ios",
     "android"
   ],
-  "references": [
-    { "path": "./packages/core-native" },
-    { "path": "./packages/js-wrapper" }
-  ]
+  "references": [{ "path": "./packages/react-native-biolink" }]
 }

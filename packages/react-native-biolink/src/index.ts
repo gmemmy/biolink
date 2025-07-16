@@ -3,7 +3,19 @@ import { NitroModules } from 'react-native-nitro-modules';
 import type { BiolinkCore } from '../specs/BiolinkCore.nitro';
 import { getLogger } from './logger';
 
-const core = NitroModules.createHybridObject<BiolinkCore>('BiolinkCore');
+let _core: BiolinkCore | null = null;
+
+function getCore(): BiolinkCore {
+  if (!_core) {
+    _core = NitroModules.createHybridObject<BiolinkCore>('BiolinkCore');
+  }
+  return _core;
+}
+
+// For testing - inject mock core
+export function __setCoreForTesting(mockCore: BiolinkCore | null) {
+  _core = mockCore;
+}
 
 /**
  * Sign in with biometrics using the native authentication
@@ -11,10 +23,22 @@ const core = NitroModules.createHybridObject<BiolinkCore>('BiolinkCore');
  */
 export async function signInWithBiometrics(): Promise<boolean> {
   const logger = getLogger();
+  const core = getCore();
+
+  // Hybrid performance timing - should use performance API if available, else fallback to Date.now()
+  const startTime =
+    typeof performance !== 'undefined' ? performance.now() : Date.now();
 
   try {
     logger.debug('Starting biometric authentication');
     const result = await core.authenticate();
+
+    // Calculate JS round-trip latency
+    const endTime =
+      typeof performance !== 'undefined' ? performance.now() : Date.now();
+    const duration = endTime - startTime;
+
+    logger.debug(`signInWithBiometrics() JS latency: ${duration.toFixed(2)}ms`);
 
     if (result) {
       logger.info('Biometric authentication successful');
@@ -24,10 +48,19 @@ export async function signInWithBiometrics(): Promise<boolean> {
 
     return result;
   } catch (error) {
+    // Still measure timing on error for complete metrics
+    const endTime =
+      typeof performance !== 'undefined' ? performance.now() : Date.now();
+    const duration = endTime - startTime;
+
+    logger.debug(
+      `signInWithBiometrics() JS latency (error): ${duration.toFixed(2)}ms`
+    );
+
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error';
     logger.error('Biometric authentication failed with error:', errorMessage);
-    return false;
+    throw error;
   }
 }
 
@@ -42,6 +75,7 @@ export async function storeSecret(
   value: string
 ): Promise<boolean> {
   const logger = getLogger();
+  const core = getCore();
 
   try {
     logger.debug(`Storing secret for key: ${key}`);
@@ -63,6 +97,7 @@ export async function storeSecret(
  */
 export async function getSecret(key: string): Promise<string | null> {
   const logger = getLogger();
+  const core = getCore();
 
   try {
     logger.debug(`Retrieving secret for key: ${key}`);

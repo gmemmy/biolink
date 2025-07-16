@@ -19,18 +19,19 @@
     "demo:start": "cd packages/biolink-demo && npx react-native start --reset-cache",
     "demo:ios": "cd packages/biolink-demo && npx react-native run-ios",
     "demo:android": "cd packages/biolink-demo && npx react-native run-android",
-    "demo:pods": "cd packages/biolink-demo/ios && pod install",
-    "strip-nulls": "grep -rlI $'\\x00' packages/react-native-biolink packages/biolink-demo/ios/Podfile | xargs perl -pi -e 's/\\x00//g'"
+    "demo:pods": "cd packages/biolink-demo/ios && pod install"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@react-native-community/cli": "^19.1.0",
+    "@types/node": "^24.0.14",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.0.0",
     "prettier": "^3.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.0"
   },
   "lint-staged": {

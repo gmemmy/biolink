@@ -4,10 +4,10 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
   useColorScheme,
 } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { signInWithBiometrics, useAuth } from 'react-native-biolink';
 
 function App() {
@@ -18,7 +18,6 @@ function App() {
     try {
       await signInWithBiometrics();
     } catch (err) {
-      // Error is handled by the useAuth hook
       console.error('Authentication failed:', err);
     }
   };
@@ -28,38 +27,43 @@ function App() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, backgroundStyle]}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View style={styles.content}>
-        <Text style={[styles.title, { color: isDarkMode ? '#fff' : '#333' }]}>
-          Biolink Demo
-        </Text>
-        <Text
-          style={[styles.subtitle, { color: isDarkMode ? '#ccc' : '#666' }]}
-        >
-          Biometric Authentication Demo
-        </Text>
-
-        <TouchableOpacity
-          style={[styles.button, isLoading && styles.buttonDisabled]}
-          onPress={handleAuthenticate}
-          disabled={isLoading}
-        >
-          <Text style={styles.buttonText}>
-            {isLoading ? 'Authenticating...' : 'Authenticate with Biometrics'}
+    <SafeAreaProvider>
+      <SafeAreaView
+        style={[styles.container, backgroundStyle]}
+        edges={['top', 'bottom']}
+      >
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <View style={styles.content}>
+          <Text style={[styles.title, { color: isDarkMode ? '#fff' : '#333' }]}>
+            Biolink Demo
           </Text>
-        </TouchableOpacity>
+          <Text
+            style={[styles.subtitle, { color: isDarkMode ? '#ccc' : '#666' }]}
+          >
+            Biometric Authentication Demo
+          </Text>
 
-        <View style={styles.statusContainer}>
-          {isAuthenticated && (
-            <Text style={styles.successText}>
-              ✅ Authenticated Successfully
+          <TouchableOpacity
+            style={[styles.button, isLoading && styles.buttonDisabled]}
+            onPress={handleAuthenticate}
+            disabled={isLoading}
+          >
+            <Text style={styles.buttonText}>
+              {isLoading ? 'Authenticating...' : 'Authenticate with Biometrics'}
             </Text>
-          )}
-          {error && <Text style={styles.errorText}>❌ {error}</Text>}
+          </TouchableOpacity>
+
+          <View style={styles.statusContainer}>
+            {isAuthenticated && (
+              <Text style={styles.successText}>
+                ✅ Authenticated Successfully
+              </Text>
+            )}
+            {error && <Text style={styles.errorText}>❌ {error}</Text>}
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

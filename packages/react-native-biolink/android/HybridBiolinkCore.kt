@@ -2,6 +2,7 @@ package com.margelo.nitro.biolink.core
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.SystemClock
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Log
@@ -77,22 +78,27 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
             }
             
             val executor: Executor = ContextCompat.getMainExecutor(reactContext)
+            var startTime: Long = 0
+            
             val biometricPrompt = BiometricPrompt(currentActivity, executor, object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                     super.onAuthenticationError(errorCode, errString)
-                    Log.e(TAG, "Authentication failed: $errorCode - $errString")
+                    val duration = SystemClock.elapsedRealtime() - startTime
+                    Log.e(TAG, "Authentication failed: $errorCode - $errString - native took ${duration}ms")
                     reject("AUTH_FAILED_$errorCode", errString.toString())
                 }
                 
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
-                    Log.i(TAG, "Biometric authentication successful")
+                    val duration = SystemClock.elapsedRealtime() - startTime
+                    Log.i(TAG, "Biometric authentication successful - native took ${duration}ms")
                     resolve(true)
                 }
                 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
-                    Log.w(TAG, "Biometric authentication failed - user authentication not recognized")
+                    val duration = SystemClock.elapsedRealtime() - startTime
+                    Log.w(TAG, "Biometric authentication failed - user authentication not recognized - native took ${duration}ms")
                     // Don't reject here - this is called for temporary failures
                 }
             })
@@ -104,6 +110,7 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
                 .build()
             
             Log.d(TAG, "Starting biometric prompt")
+            startTime = SystemClock.elapsedRealtime()
             biometricPrompt.authenticate(promptInfo)
         }
     }

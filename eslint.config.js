@@ -15,6 +15,13 @@ export default [
       globals: {
         console: 'readonly',
         __DEV__: 'readonly',
+        jest: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        performance: 'readonly',
       },
     },
     plugins: {

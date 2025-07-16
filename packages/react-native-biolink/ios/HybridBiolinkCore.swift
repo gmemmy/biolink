@@ -26,12 +26,16 @@ public class HybridBiolinkCore: HybridBiolinkCoreSpec {
             }
             
             return try await withCheckedThrowingContinuation { continuation in
+                let start = CFAbsoluteTimeGetCurrent()
+                
                 context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Authenticate to access your account") { success, authError in
+                    let duration = (CFAbsoluteTimeGetCurrent() - start) * 1000
+                    
                     if success {
-                        os_log(.info, log: .default, "BiolinkCore: Authentication successful")
+                        os_log(.info, log: .default, "BiolinkCore: Authentication successful - native took %.2f ms", duration)
                         continuation.resume(returning: true)
                     } else {
-                        os_log(.error, log: .default, "BiolinkCore: Authentication failed - %@", authError?.localizedDescription ?? "Unknown error")
+                        os_log(.error, log: .default, "BiolinkCore: Authentication failed - native took %.2f ms - %@", duration, authError?.localizedDescription ?? "Unknown error")
                         let error = authError ?? NSError(domain: "BiolinkCore", code: 1002, userInfo: [NSLocalizedDescriptionKey: "Authentication failed"])
                         continuation.resume(throwing: error)
                     }
