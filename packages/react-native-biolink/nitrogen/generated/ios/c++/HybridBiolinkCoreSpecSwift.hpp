@@ -15,8 +15,8 @@ namespace BiolinkCore { class HybridBiolinkCoreSpec_cxx; }
 
 
 #include <NitroModules/Promise.hpp>
-#include <string>
 #include <optional>
+#include <string>
 
 #include "BiolinkCore-Swift-Cxx-Umbrella.hpp"
 
@@ -57,8 +57,8 @@ namespace margelo::nitro::biolink::native {
 
   public:
     // Methods
-    inline std::shared_ptr<Promise<bool>> authenticate() override {
-      auto __result = _swiftPart.authenticate();
+    inline std::shared_ptr<Promise<bool>> authenticate(std::optional<bool> fallbackToDeviceCredential) override {
+      auto __result = _swiftPart.authenticate(fallbackToDeviceCredential);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

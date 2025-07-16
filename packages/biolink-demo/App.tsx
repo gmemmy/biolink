@@ -8,17 +8,29 @@ import {
   useColorScheme,
 } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { signInWithBiometrics, useAuth } from 'react-native-biolink';
+import { authenticate, useAuth } from 'react-native-biolink';
 
 function App() {
-  const { isAuthenticated, error, isLoading } = useAuth();
+  const { isAuthenticated, error, isLoading, clearError } = useAuth();
   const isDarkMode = useColorScheme() === 'dark';
 
-  const handleAuthenticate = async () => {
+  const handleBiometricsOnly = async () => {
     try {
-      await signInWithBiometrics();
+      clearError();
+      const result = await authenticate(false);
+      console.log('Biometrics-only authentication result:', result);
     } catch (err) {
-      console.error('Authentication failed:', err);
+      console.error('Biometrics-only authentication failed:', err);
+    }
+  };
+
+  const handleBiometricsWithFallback = async () => {
+    try {
+      clearError();
+      const result = await authenticate(true);
+      console.log('Biometrics with fallback authentication result:', result);
+    } catch (err) {
+      console.error('Biometrics with fallback authentication failed:', err);
     }
   };
 
@@ -45,11 +57,21 @@ function App() {
 
           <TouchableOpacity
             style={[styles.button, isLoading && styles.buttonDisabled]}
-            onPress={handleAuthenticate}
+            onPress={handleBiometricsOnly}
             disabled={isLoading}
           >
             <Text style={styles.buttonText}>
-              {isLoading ? 'Authenticating...' : 'Authenticate with Biometrics'}
+              {isLoading ? 'Authenticating...' : 'Biometrics Only'}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, styles.secondaryButton, isLoading && styles.buttonDisabled]}
+            onPress={handleBiometricsWithFallback}
+            disabled={isLoading}
+          >
+            <Text style={styles.buttonText}>
+              {isLoading ? 'Authenticating...' : 'Biometrics + Device PIN'}
             </Text>
           </TouchableOpacity>
 
@@ -93,13 +115,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 15,
     borderRadius: 12,
-    marginBottom: 30,
+    marginBottom: 15,
     minWidth: 250,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 3,
+  },
+  secondaryButton: {
+    backgroundColor: '#34C759',
   },
   buttonDisabled: {
     backgroundColor: '#ccc',
@@ -113,6 +138,7 @@ const styles = StyleSheet.create({
   statusContainer: {
     alignItems: 'center',
     minHeight: 60,
+    marginTop: 15,
   },
   successText: {
     fontSize: 18,

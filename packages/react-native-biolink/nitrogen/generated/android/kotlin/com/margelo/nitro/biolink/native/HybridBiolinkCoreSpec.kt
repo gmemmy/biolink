@@ -42,7 +42,7 @@ abstract class HybridBiolinkCoreSpec: HybridObject() {
   // Methods
   @DoNotStrip
   @Keep
-  abstract fun authenticate(): Promise<Boolean>
+  abstract fun authenticate(fallbackToDeviceCredential: Boolean?): Promise<Boolean>
   
   @DoNotStrip
   @Keep

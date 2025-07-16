@@ -32,8 +32,9 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
         reactContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    override fun authenticate(): Promise<Boolean> {
-        Log.d(TAG, "authenticate() called")
+    override fun authenticate(fallbackToDeviceCredential: Boolean?): Promise<Boolean> {
+        val fallback = fallbackToDeviceCredential ?: false
+        Log.d(TAG, "authenticate() called with fallbackToDeviceCredential: $fallback")
         
         return Promise.create { resolve, reject ->
             val currentActivity = reactContext.currentActivity
@@ -50,10 +51,16 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
                 return@create
             }
             
+            val authenticators = if (fallback) {
+                BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            } else {
+                BiometricManager.Authenticators.BIOMETRIC_WEAK
+            }
+            
             val biometricManager = BiometricManager.from(reactContext)
-            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+            when (biometricManager.canAuthenticate(authenticators)) {
                 BiometricManager.BIOMETRIC_SUCCESS -> {
-                    Log.d(TAG, "Biometric authentication is available")
+                    Log.d(TAG, "Authentication is available")
                 }
                 BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
                     Log.e(TAG, "Authentication failed: NO_BIOMETRICS - No biometric features available")
@@ -66,13 +73,18 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
                     return@create
                 }
                 BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                    Log.e(TAG, "Authentication failed: NO_BIOMETRICS - No biometric credentials enrolled")
-                    reject("NO_BIOMETRICS", "No biometric credentials are enrolled")
+                    if (fallback) {
+                        Log.e(TAG, "Authentication failed: NO_CREDENTIALS - No biometric or device credentials enrolled")
+                        reject("NO_CREDENTIALS", "No biometric or device credentials are enrolled")
+                    } else {
+                        Log.e(TAG, "Authentication failed: NO_BIOMETRICS - No biometric credentials enrolled")
+                        reject("NO_BIOMETRICS", "No biometric credentials are enrolled")
+                    }
                     return@create
                 }
                 else -> {
-                    Log.e(TAG, "Authentication failed: NO_BIOMETRICS - Biometric authentication not available")
-                    reject("NO_BIOMETRICS", "Biometric authentication is not available")
+                    Log.e(TAG, "Authentication failed: Authentication not available")
+                    reject("NO_AUTH", "Authentication is not available")
                     return@create
                 }
             }
@@ -91,25 +103,33 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
                     val duration = SystemClock.elapsedRealtime() - startTime
-                    Log.i(TAG, "Biometric authentication successful - native took ${duration}ms")
+                    Log.i(TAG, "Authentication successful - native took ${duration}ms")
                     resolve(true)
                 }
                 
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     val duration = SystemClock.elapsedRealtime() - startTime
-                    Log.w(TAG, "Biometric authentication failed - user authentication not recognized - native took ${duration}ms")
+                    Log.w(TAG, "Authentication failed - user authentication not recognized - native took ${duration}ms")
                     // Don't reject here - this is called for temporary failures
                 }
             })
             
-            val promptInfo = BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric Authentication")
+            val promptInfoBuilder = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Authentication Required")
                 .setSubtitle("Authenticate to continue")
-                .setNegativeButtonText("Cancel")
-                .build()
             
-            Log.d(TAG, "Starting biometric prompt")
+            if (fallback) {
+                promptInfoBuilder.setAllowedAuthenticators(authenticators)
+            } else {
+                // When fallback is disabled, only biometrics are allowed, so we need a cancel button
+                promptInfoBuilder.setNegativeButtonText("Cancel")
+                    .setAllowedAuthenticators(authenticators)
+            }
+            
+            val promptInfo = promptInfoBuilder.build()
+            
+            Log.d(TAG, "Starting authentication prompt")
             startTime = SystemClock.elapsedRealtime()
             biometricPrompt.authenticate(promptInfo)
         }
@@ -199,4 +219,4 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
             keyGenerator.generateKey()
         }
     }
-} 
+}

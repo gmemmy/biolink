@@ -16,8 +16,8 @@
 
 
 #include <NitroModules/Promise.hpp>
-#include <string>
 #include <optional>
+#include <string>
 
 namespace margelo::nitro::biolink::native {
 
@@ -50,7 +50,7 @@ namespace margelo::nitro::biolink::native {
 
     public:
       // Methods
-      virtual std::shared_ptr<Promise<bool>> authenticate() = 0;
+      virtual std::shared_ptr<Promise<bool>> authenticate(std::optional<bool> fallbackToDeviceCredential) = 0;
       virtual std::shared_ptr<Promise<void>> storeSecret(const std::string& key, const std::string& value) = 0;
       virtual std::shared_ptr<Promise<std::optional<std::string>>> getSecret(const std::string& key) = 0;
 

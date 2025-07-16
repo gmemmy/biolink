@@ -35,9 +35,9 @@ namespace margelo::nitro::biolink::native {
   
 
   // Methods
-  std::shared_ptr<Promise<bool>> JHybridBiolinkCoreSpec::authenticate() {
-    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>()>("authenticate");
-    auto __result = method(_javaPart);
+  std::shared_ptr<Promise<bool>> JHybridBiolinkCoreSpec::authenticate(std::optional<bool> fallbackToDeviceCredential) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<jni::JBoolean> /* fallbackToDeviceCredential */)>("authenticate");
+    auto __result = method(_javaPart, fallbackToDeviceCredential.has_value() ? jni::JBoolean::valueOf(fallbackToDeviceCredential.value()) : nullptr);
     return [&]() {
       auto __promise = Promise<bool>::create();
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {

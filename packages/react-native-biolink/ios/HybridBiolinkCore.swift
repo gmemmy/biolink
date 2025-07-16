@@ -13,22 +13,28 @@ public class HybridBiolinkCore: HybridBiolinkCoreSpec {
       super.init()
     }
     
-    public func authenticate() throws -> Promise<Bool> {
-        os_log(.debug, log: .default, "BiolinkCore: authenticate() called")
+    public func authenticate(fallbackToDeviceCredential: Bool?) throws -> Promise<Bool> {
+        let fallback = fallbackToDeviceCredential ?? false
+        os_log(.debug, log: .default, "BiolinkCore: authenticate() called with fallbackToDeviceCredential: %@", fallback ? "true" : "false")
         
         return Promise<Bool>.async {
             let context = LAContext()
             var error: NSError?
             
-            guard context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-                os_log(.error, log: .default, "BiolinkCore: Biometric authentication not available - %@", error?.localizedDescription ?? "Unknown error")
-                throw NSError(domain: "BiolinkCore", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Biometric authentication is not available"])
+            // Choose policy based on fallbackToDeviceCredential parameter
+            let policy: LAPolicy = fallback ? .deviceOwnerAuthentication : .deviceOwnerAuthenticationWithBiometrics
+            
+            guard context.canEvaluatePolicy(policy, error: &error) else {
+                let policyName = fallback ? "deviceOwnerAuthentication" : "deviceOwnerAuthenticationWithBiometrics"
+                os_log(.error, log: .default, "BiolinkCore: Authentication policy %@ not available - %@", policyName, error?.localizedDescription ?? "Unknown error")
+                throw NSError(domain: "BiolinkCore", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Authentication is not available"])
             }
             
             return try await withCheckedThrowingContinuation { continuation in
                 let start = CFAbsoluteTimeGetCurrent()
+                let reason = fallback ? "Authenticate with biometrics or device passcode to access your account" : "Authenticate with biometrics to access your account"
                 
-                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Authenticate to access your account") { success, authError in
+                context.evaluatePolicy(policy, localizedReason: reason) { success, authError in
                     let duration = (CFAbsoluteTimeGetCurrent() - start) * 1000
                     
                     if success {

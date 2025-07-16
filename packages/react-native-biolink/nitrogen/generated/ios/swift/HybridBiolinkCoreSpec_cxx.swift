@@ -101,9 +101,9 @@ public class HybridBiolinkCoreSpec_cxx {
 
   // Methods
   @inline(__always)
-  public final func authenticate() -> bridge.Result_std__shared_ptr_Promise_bool___ {
+  public final func authenticate(fallbackToDeviceCredential: bridge.std__optional_bool_) -> bridge.Result_std__shared_ptr_Promise_bool___ {
     do {
-      let __result = try self.__implementation.authenticate()
+      let __result = try self.__implementation.authenticate(fallbackToDeviceCredential: fallbackToDeviceCredential.value)
       let __resultCpp = { () -> bridge.std__shared_ptr_Promise_bool__ in
         let __promise = bridge.create_std__shared_ptr_Promise_bool__()
         let __promiseHolder = bridge.wrap_std__shared_ptr_Promise_bool__(__promise)

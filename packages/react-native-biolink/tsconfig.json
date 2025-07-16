@@ -17,18 +17,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
+    "types": ["jest"],
     "baseUrl": ".",
     "paths": {
       "../specs/*": ["specs/*"],
       "../nitrogen/*": ["nitrogen/*"]
     }
   },
-  "include": ["src/**/*", "specs/**/*"],
+  "include": ["src/**/*", "specs/**/*", "__tests__/**/*"],
   "exclude": [
     "node_modules",
     "lib",
-    "nitrogen/generated",
-    "**/*.test.ts",
-    "**/*.test.tsx"
+    "nitrogen/generated"
   ]
 }
