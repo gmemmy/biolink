@@ -25,9 +25,5 @@
     }
   },
   "include": ["src/**/*", "specs/**/*", "__tests__/**/*"],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "nitrogen/generated"
-  ]
+  "exclude": ["node_modules", "lib", "nitrogen/generated"]
 }

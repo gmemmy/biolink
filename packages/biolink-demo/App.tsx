@@ -66,7 +66,11 @@ function App() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={[styles.button, styles.secondaryButton, isLoading && styles.buttonDisabled]}
+            style={[
+              styles.button,
+              styles.secondaryButton,
+              isLoading && styles.buttonDisabled,
+            ]}
             onPress={handleBiometricsWithFallback}
             disabled={isLoading}
           >

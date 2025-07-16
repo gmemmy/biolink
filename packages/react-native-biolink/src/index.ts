@@ -22,7 +22,9 @@ export function __setCoreForTesting(mockCore: BiolinkCore | null) {
  * @param fallbackToDeviceCredential - Allow fallback to device passcode/PIN if biometrics fail
  * @returns Promise<boolean> - true if authentication successful, false otherwise
  */
-export async function signInWithBiometrics(fallbackToDeviceCredential = false): Promise<boolean> {
+export async function signInWithBiometrics(
+  fallbackToDeviceCredential = false
+): Promise<boolean> {
   const logger = getLogger();
   const core = getCore();
 
@@ -31,7 +33,9 @@ export async function signInWithBiometrics(fallbackToDeviceCredential = false): 
     typeof performance !== 'undefined' ? performance.now() : Date.now();
 
   try {
-    logger.debug(`Starting biometric authentication (fallbackToDeviceCredential: ${fallbackToDeviceCredential})`);
+    logger.debug(
+      `Starting biometric authentication (fallbackToDeviceCredential: ${fallbackToDeviceCredential})`
+    );
     const result = await core.authenticate(fallbackToDeviceCredential);
 
     // Calculate JS round-trip latency
@@ -70,7 +74,9 @@ export async function signInWithBiometrics(fallbackToDeviceCredential = false): 
  * @param fallbackToDeviceCredential - Allow fallback to device passcode/PIN if biometrics fail
  * @returns Promise<boolean> - true if authentication successful, false otherwise
  */
-export async function authenticate(fallbackToDeviceCredential = false): Promise<boolean> {
+export async function authenticate(
+  fallbackToDeviceCredential = false
+): Promise<boolean> {
   return signInWithBiometrics(fallbackToDeviceCredential);
 }
 
@@ -151,32 +157,35 @@ export function useAuth(): UseAuthReturn {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const authenticate = useCallback(async (fallbackToDeviceCredential = false) => {
-    const logger = getLogger();
+  const authenticate = useCallback(
+    async (fallbackToDeviceCredential = false) => {
+      const logger = getLogger();
 
-    setIsLoading(true);
-    setError(null);
-    logger.debug('useAuth: Starting authentication');
+      setIsLoading(true);
+      setError(null);
+      logger.debug('useAuth: Starting authentication');
 
-    try {
-      const success = await signInWithBiometrics(fallbackToDeviceCredential);
-      if (success) {
-        setIsAuthenticated(true);
-        logger.info('useAuth: Authentication successful');
-      } else {
-        setError('Authentication failed');
-        logger.warn('useAuth: Authentication failed');
+      try {
+        const success = await signInWithBiometrics(fallbackToDeviceCredential);
+        if (success) {
+          setIsAuthenticated(true);
+          logger.info('useAuth: Authentication successful');
+        } else {
+          setError('Authentication failed');
+          logger.warn('useAuth: Authentication failed');
+        }
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : 'Authentication failed';
+        setError(errorMessage);
+        setIsAuthenticated(false);
+        logger.error('useAuth: Authentication error:', errorMessage);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : 'Authentication failed';
-      setError(errorMessage);
-      setIsAuthenticated(false);
-      logger.error('useAuth: Authentication error:', errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    },
+    []
+  );
 
   const clearError = useCallback(() => {
     const logger = getLogger();

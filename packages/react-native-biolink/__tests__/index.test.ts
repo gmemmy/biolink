@@ -15,7 +15,11 @@ jest.mock('../src/logger', () => ({
   }),
 }));
 
-import { signInWithBiometrics, authenticate, __setCoreForTesting } from '../src/index';
+import {
+  signInWithBiometrics,
+  authenticate,
+  __setCoreForTesting,
+} from '../src/index';
 import type { BiolinkCore } from '../specs/BiolinkCore.nitro';
 
 describe('BioLink Authentication', () => {
@@ -24,7 +28,7 @@ describe('BioLink Authentication', () => {
   beforeEach(() => {
     // Reset core singleton between tests
     __setCoreForTesting(null);
-    
+
     // Create fresh mock for each test
     mockCore = {
       authenticate: jest.fn(),
@@ -40,9 +44,9 @@ describe('BioLink Authentication', () => {
     it('returns true when native authenticate resolves true (no fallback)', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       const result = await signInWithBiometrics();
-      
+
       expect(result).toBe(true);
       expect(mockCore.authenticate).toHaveBeenCalledWith(false);
     });
@@ -50,9 +54,9 @@ describe('BioLink Authentication', () => {
     it('returns true when native authenticate resolves true (with fallback)', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       const result = await signInWithBiometrics(true);
-      
+
       expect(result).toBe(true);
       expect(mockCore.authenticate).toHaveBeenCalledWith(true);
     });
@@ -60,9 +64,9 @@ describe('BioLink Authentication', () => {
     it('defaults to false when no fallback parameter provided', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       await signInWithBiometrics();
-      
+
       expect(mockCore.authenticate).toHaveBeenCalledWith(false);
     });
 
@@ -70,8 +74,10 @@ describe('BioLink Authentication', () => {
       const error = new Error('Authentication failed');
       (mockCore.authenticate as jest.Mock).mockRejectedValue(error);
       __setCoreForTesting(mockCore);
-      
-      await expect(signInWithBiometrics()).rejects.toThrow('Authentication failed');
+
+      await expect(signInWithBiometrics()).rejects.toThrow(
+        'Authentication failed'
+      );
       expect(mockCore.authenticate).toHaveBeenCalledWith(false);
     });
 
@@ -79,8 +85,10 @@ describe('BioLink Authentication', () => {
       const error = new Error('Authentication failed');
       (mockCore.authenticate as jest.Mock).mockRejectedValue(error);
       __setCoreForTesting(mockCore);
-      
-      await expect(signInWithBiometrics(true)).rejects.toThrow('Authentication failed');
+
+      await expect(signInWithBiometrics(true)).rejects.toThrow(
+        'Authentication failed'
+      );
       expect(mockCore.authenticate).toHaveBeenCalledWith(true);
     });
   });
@@ -89,9 +97,9 @@ describe('BioLink Authentication', () => {
     it('calls native authenticate with false when no parameter provided', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       const result = await authenticate();
-      
+
       expect(result).toBe(true);
       expect(mockCore.authenticate).toHaveBeenCalledWith(false);
     });
@@ -99,9 +107,9 @@ describe('BioLink Authentication', () => {
     it('calls native authenticate with false when explicitly passed false', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       const result = await authenticate(false);
-      
+
       expect(result).toBe(true);
       expect(mockCore.authenticate).toHaveBeenCalledWith(false);
     });
@@ -109,9 +117,9 @@ describe('BioLink Authentication', () => {
     it('calls native authenticate with true when explicitly passed true', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       const result = await authenticate(true);
-      
+
       expect(result).toBe(true);
       expect(mockCore.authenticate).toHaveBeenCalledWith(true);
     });
@@ -119,9 +127,9 @@ describe('BioLink Authentication', () => {
     it('returns false when native authenticate resolves false', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(false);
       __setCoreForTesting(mockCore);
-      
+
       const result = await authenticate(false);
-      
+
       expect(result).toBe(false);
       expect(mockCore.authenticate).toHaveBeenCalledWith(false);
     });
@@ -130,8 +138,10 @@ describe('BioLink Authentication', () => {
       const error = new Error('Biometric hardware not available');
       (mockCore.authenticate as jest.Mock).mockRejectedValue(error);
       __setCoreForTesting(mockCore);
-      
-      await expect(authenticate(true)).rejects.toThrow('Biometric hardware not available');
+
+      await expect(authenticate(true)).rejects.toThrow(
+        'Biometric hardware not available'
+      );
       expect(mockCore.authenticate).toHaveBeenCalledWith(true);
     });
   });
@@ -140,13 +150,13 @@ describe('BioLink Authentication', () => {
     it('authenticate() and signInWithBiometrics() produce identical results', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       const authenticateResult = await authenticate();
-      
+
       (mockCore.authenticate as jest.Mock).mockClear();
-      
+
       const signInResult = await signInWithBiometrics();
-      
+
       expect(authenticateResult).toBe(signInResult);
       expect(mockCore.authenticate).toHaveBeenCalledWith(false);
     });
@@ -154,13 +164,13 @@ describe('BioLink Authentication', () => {
     it('authenticate(true) and signInWithBiometrics(true) produce identical results', async () => {
       (mockCore.authenticate as jest.Mock).mockResolvedValue(true);
       __setCoreForTesting(mockCore);
-      
+
       const authenticateResult = await authenticate(true);
-      
+
       (mockCore.authenticate as jest.Mock).mockClear();
-      
+
       const signInResult = await signInWithBiometrics(true);
-      
+
       expect(authenticateResult).toBe(signInResult);
       expect(mockCore.authenticate).toHaveBeenCalledWith(true);
     });
