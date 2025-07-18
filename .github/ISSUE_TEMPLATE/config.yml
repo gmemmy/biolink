@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://github.com/gmemmy/biolink#readme
+    about: Please check our documentation first
+  - name: 💬 Discussions
+    url: https://github.com/gmemmy/biolink/discussions
+    about: Ask questions and share ideas in our discussions
+  - name: 📱 Demo App
+    url: https://github.com/gmemmy/biolink/tree/main/biolink-demo
+    about: Check out our demo app to see the library in action 

@@ -56,6 +56,7 @@ For complete usage examples, API documentation, and advanced features, see the *
 - **[📱 Demo App](./biolink-demo/README.md)** - See the library in action
 - **[🐛 Issues](https://github.com/gmemmy/biolink/issues)** - Report bugs and request features
 - **[💬 Discussions](https://github.com/gmemmy/biolink/discussions)** - Ask questions and share ideas
+- **[📋 Contributing Guide](https://github.com/gmemmy/biolink/blob/main/CONTRIBUTING.md)** - How to contribute to the project
 
 ## 📄 License
 
