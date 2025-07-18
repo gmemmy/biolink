@@ -27,7 +27,7 @@ import {
   isSigningAvailable,
   PinAuthError,
   type PinLockoutStatus,
-} from 'react-native-biolink';
+} from '@gmemmy/react-native-biolink';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 

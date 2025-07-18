@@ -15,7 +15,7 @@
     "@react-native/gradle-plugin": "0.81.0-rc.0",
     "react": "19.1.0",
     "react-native": "0.81.0-rc.0",
-    "react-native-biolink": "workspace:*",
+    "@gmemmy/react-native-biolink": "^1.0.0",
     "react-native-nitro-modules": "^0.26.3",
     "react-native-safe-area-context": "^5.5.2"
   },
