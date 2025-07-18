@@ -10,7 +10,7 @@ let isSigningAvailableCache: boolean | null = null;
 async function getCoreInstance(): Promise<BiolinkCore> {
   if (!coreInstance) {
     const { NitroModules } = await import('react-native-nitro-modules');
-    coreInstance = NitroModules.get<BiolinkCore>('BiolinkCore');
+    coreInstance = NitroModules.createHybridObject<BiolinkCore>('BiolinkCore');
   }
   return coreInstance;
 }

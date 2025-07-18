@@ -48,8 +48,8 @@ importers:
         specifier: ^7.27.0
         version: 7.27.6
       '@gmemmy/react-native-biolink':
-        specifier: ^1.0.1
-        version: 1.0.1(react-native-nitro-modules@0.26.4(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0))(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
+        specifier: ^1.0.5
+        version: 1.0.5(react-native-nitro-modules@0.26.4(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0))(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       '@react-native/codegen':
         specifier: 0.81.0-rc.0
         version: 0.81.0-rc.0(@babel/core@7.28.0)
@@ -158,8 +158,8 @@ importers:
         specifier: ^3.0.0
         version: 3.6.2
       react-native-nitro-modules:
-        specifier: ^0.1.0
-        version: 0.1.7(react-native@0.80.1(@babel/core@7.28.0)(@react-native-community/cli@19.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@19.1.0))(react@19.1.0)
+        specifier: ^0.26.0
+        version: 0.26.4(react-native@0.80.1(@babel/core@7.28.0)(@react-native-community/cli@19.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@19.1.0))(react@19.1.0)
       ts-jest:
         specifier: ^29.0.0
         version: 29.4.0(@babel/core@7.28.0)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.28.0))(jest-util@29.7.0)(jest@29.7.0(@types/node@24.0.14)(ts-node@10.9.2(@types/node@24.0.14)(typescript@5.8.3)))(typescript@5.8.3)
@@ -878,8 +878,8 @@ packages:
     resolution: {integrity: sha512-1+WqvgNMhmlAambTvT3KPtCl/Ibr68VldY2XY40SL1CE0ZXiakFR/cbTspaF5HsnpDMvcYYoJHfl4980NBjGag==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@gmemmy/react-native-biolink@1.0.1':
-    resolution: {integrity: sha512-1WQYZpt9sm77axPZN0pONOIxQNSrT0/YE2NFB8UDStPnLUwPy4TeNimC0ZT2gXw/5p85XzOmObIjY5g++0hHYg==}
+  '@gmemmy/react-native-biolink@1.0.5':
+    resolution: {integrity: sha512-Ga4LX6WONPxuDJZhWz6GIRGhzyr1Az5oV/Tugw4fHE5Iq5vr2ybd2HOTs2G04i6j2YGe7SzjW57Bf4ELsxvT1g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: '>=18.0.0'
@@ -3451,12 +3451,6 @@ packages:
   react-native-logs@5.3.0:
     resolution: {integrity: sha512-tq4S0JFy06ggu1D/udYeV80qPy5koURNNcKrVJmv0Hf3x44akysctaE4ARybD5Pv7MnFD8fP1VFhycSLjqXHQw==}
 
-  react-native-nitro-modules@0.1.7:
-    resolution: {integrity: sha512-knrRu9DK1K5m/eblMbYSJaaHnlmB3GgL2ZXmC2Y9uxVdW9gv1JNXTYyH919ybtSmTsqdXLN7x6ozLCAZWtp+vA==}
-    peerDependencies:
-      react: '*'
-      react-native: '*'
-
   react-native-nitro-modules@0.26.4:
     resolution: {integrity: sha512-sCZ0U+FY6JM73HaZYyc4kSRV7JQZXGfbimpYJzaAaZFQMGpJFkD5c3Jt66j1v83wN/m6D/SM9yyx+dN6XTfGAg==}
     peerDependencies:
@@ -5045,7 +5039,7 @@ snapshots:
       '@eslint/core': 0.15.1
       levn: 0.4.1
 
-  '@gmemmy/react-native-biolink@1.0.1(react-native-nitro-modules@0.26.4(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0))(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)':
+  '@gmemmy/react-native-biolink@1.0.5(react-native-nitro-modules@0.26.4(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0))(react-native@0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)':
     dependencies:
       react: 19.1.0
       react-native: 0.81.0-rc.0(@babel/core@7.28.0)(@react-native-community/cli@20.0.0-alpha.0(typescript@5.8.3))(@react-native/metro-config@0.81.0-rc.0(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0)
@@ -8703,7 +8697,7 @@ snapshots:
 
   react-native-logs@5.3.0: {}
 
-  react-native-nitro-modules@0.1.7(react-native@0.80.1(@babel/core@7.28.0)(@react-native-community/cli@19.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@19.1.0))(react@19.1.0):
+  react-native-nitro-modules@0.26.4(react-native@0.80.1(@babel/core@7.28.0)(@react-native-community/cli@19.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@19.1.0))(react@19.1.0):
     dependencies:
       react: 19.1.0
       react-native: 0.80.1(@babel/core@7.28.0)(@react-native-community/cli@19.1.0(typescript@5.8.3))(@types/react@18.3.23)(react@19.1.0)

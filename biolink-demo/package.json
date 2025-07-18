@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
-    "@gmemmy/react-native-biolink": "^1.0.1",
+    "@gmemmy/react-native-biolink": "^1.0.5",
     "@react-native/codegen": "0.81.0-rc.0",
     "@react-native/gradle-plugin": "0.81.0-rc.0",
     "react": "19.1.0",
