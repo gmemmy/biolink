@@ -12,12 +12,17 @@
   "dependencies": {
     "@babel/runtime": "^7.27.0",
     "@gmemmy/react-native-biolink": "^1.0.5",
+    "@react-native-community/blur": "^4.4.1",
     "@react-native/codegen": "0.81.0-rc.0",
     "@react-native/gradle-plugin": "0.81.0-rc.0",
+    "@react-navigation/bottom-tabs": "^7.4.2",
+    "@react-navigation/native": "^7.1.14",
     "react": "19.1.0",
     "react-native": "0.81.0-rc.0",
     "react-native-nitro-modules": "^0.26.3",
-    "react-native-safe-area-context": "^5.5.2"
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-screens": "^4.13.1",
+    "react-native-vector-icons": "^10.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
