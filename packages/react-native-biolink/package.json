@@ -1,17 +1,20 @@
 {
-  "name": "react-native-biolink",
+  "name": "@biolink/react-native-biolink",
   "version": "1.0.0",
-  "description": "React Native biometric authentication library using Nitro modules",
-  "main": "lib/src/index.js",
-  "types": "lib/src/index.d.ts",
-  "private": true,
+  "description": "React Native biometric authentication and secure storage library using Nitro modules for bridge-free native communication",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc -b",
-    "clean": "rm -rf lib nitrogen/generated",
+    "clean": "rm -rf dist nitrogen/generated",
     "codegen": "nitro-codegen",
-    "lint": "eslint src --ext .ts,.tsx",
-    "lint:fix": "eslint src --ext .ts,.tsx --fix",
-    "test": "jest"
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "test": "jest",
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "ci": "npm run build && npm run check-format && npm run test"
   },
   "keywords": [
     "react-native",
@@ -20,8 +23,13 @@
     "biometric",
     "authentication",
     "keychain",
+    "keystore",
+    "secure-storage",
+    "cryptography",
+    "signing",
     "ios",
-    "android"
+    "android",
+    "typescript"
   ],
   "dependencies": {
     "react-native-logs": "^5.0.0"
@@ -34,7 +42,8 @@
     "eslint": "^8.57.1",
     "jest": "^29.0.0",
     "ts-jest": "^29.0.0",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "prettier": "^3.0.0"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
@@ -42,11 +51,10 @@
     "react-native-nitro-modules": "^0.26.3"
   },
   "files": [
-    "lib/",
-    "src/",
-    "ios/",
-    "android/",
-    "nitrogen/",
+    "dist",
+    "ios",
+    "android",
+    "nitrogen",
     "*.podspec",
     "react-native.config.js"
   ],
@@ -54,9 +62,15 @@
     "type": "git",
     "url": "git+https://github.com/biolink/react-native-biolink.git"
   },
-  "homepage": "https://github.com/biolink/react-native-biolink",
+  "homepage": "https://github.com/biolink/react-native-biolink#readme",
+  "bugs": {
+    "url": "https://github.com/biolink/react-native-biolink/issues"
+  },
   "license": "MIT",
-  "author": "Biolink Team",
+  "author": {
+    "name": "Biolink Team",
+    "email": "team@biolink.dev"
+  },
   "engines": {
     "node": ">=18.0.0"
   }
