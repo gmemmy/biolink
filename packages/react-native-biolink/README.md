@@ -1,10 +1,12 @@
 # @gmemmy/react-native-biolink
 
-[![CI](https://github.com/gmemmy/react-native-biolink/workflows/CI/badge.svg)](https://github.com/gmemmy/react-native-biolink/actions)
+[![CI](https://github.com/gmemmy/biolink/workflows/CI/badge.svg)](https://github.com/gmemmy/biolink/actions)
 [![npm version](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink.svg)](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A fast biometric authentication and secure storage module for React Native's new architecture, built on Nitro Modules, with PIN authentication and device credential fallback.
+
+> **📖 Developer Documentation** - This is the complete API reference and developer guide. For a quick overview, see the [README](../../README.md).
 
 ## Features
 
@@ -229,6 +231,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- 📖 [Documentation](https://github.com/gmemmy/react-native-biolink)
-- 🐛 [Issues](https://github.com/gmemmy/react-native-biolink/issues)
-- 💬 [Discussions](https://github.com/gmemmy/react-native-biolink/discussions)
+- 📖 [Documentation](https://github.com/gmemmy/biolink)
+- 🐛 [Issues](https://github.com/gmemmy/biolink/issues)
+- 💬 [Discussions](https://github.com/gmemmy/biolink/discussions)

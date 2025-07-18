@@ -1,190 +1,108 @@
 # React Native Biolink
 
-A **bridge-free** biometric authentication and secure storage library built on Nitro Modules for React Native 0.74+.
+A **bridge-free** biometric authentication and secure storage library built on Nitro Modules for React Native 0.74+ with new Architecture enabled.
 
-[![Nitro](https://img.shields.io/badge/Built_with-Nitro_Modules-blue?style=flat&logo=rocket)](https://nitro.margelo.com)
-[![React Native](https://img.shields.io/badge/React_Native-0.74+-blue?style=flat&logo=react)](https://reactnative.dev)
+[![CI](https://github.com/gmemmy/biolink/workflows/CI/badge.svg)](https://github.com/gmemmy/biolink/actions)
+[![npm version](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink.svg)](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
 
-## 🚀 Library Overview
+## 📦 NPM Package
+
+**[@gmemmy/react-native-biolink](https://www.npmjs.com/package/@gmemmy/react-native-biolink)**
+
+```bash
+npm install @gmemmy/react-native-biolink react-native-nitro-modules
+# or
+pnpm add @gmemmy/react-native-biolink react-native-nitro-modules
+# or
+yarn add @gmemmy/react-native-biolink react-native-nitro-modules
+```
+
+## 🚀 Overview
 
 **React Native Biolink** is a high-performance biometric authentication and secure storage library built on [Nitro Modules](https://nitro.margelo.com) for React Native's New Architecture. Unlike bridge-based libraries, Biolink uses Nitro's JSI implementation for **near-zero latency** native communication.
 
-### What Makes It Special
+### Key Features
 
-- **🔗 Bridge-Free**: Direct JSI communication
-- **⚡ Ultra-Fast**: Near-zero call latency
-- **🔐 Hardware-Backed**: Secure Enclave (iOS) and TEE Keystore (Android)
-- **🎯 Type-Safe**: Full TypeScript with generated bindings
-- **🏗️ New Architecture Ready**: Built on Nitro Modules for React Native 0.74+
-
-## ✨ Key Features & Benefits
-
-### **Promise-Based API**
-
-```typescript
-// Simple, unified API
-await authenticate(fallbackToDeviceCredential?: boolean)
-await storeSecret(key: string, value: string)
-const secret = await getSecret(key: string)
-
-// Cryptographic signing for secure API requests
-const headers = await getSignatureHeaders(requestBody)
-const fullHeaders = await getSignatureHeadersWithPublicKey(requestBody)
-```
-
-### **Hardware-Backed Security**
-
-- **iOS**: Secure Enclave with Face ID/Touch ID
-- **Android**: TEE Keystore
-- **Fallback**: Device credential (PIN/pattern)
-- **PIN Auth**: App-managed PIN with lockout
-- **Request Signing**: Cryptographic signatures for API security
-
-### **Headless Design**
-
-- **No Bundled UI**: Custom authentication flows
-- **Flexible**: Any UI framework
-- **React Hooks**: `useAuth()` for state management
-
-### **Performance Edge**
-
-- **JSI First**: Direct native communication
-- **Near-Zero Latency**: Millisecond operations
-- **Memory Efficient**: No bridge overhead
-
-### **Developer Experience**
-
-- **Pluggable Logging**: Customizable audit events
-- **Error Handling**: Comprehensive error types
-- **Testing Support**: Built-in utilities
+- **🔗 Bridge-Free**: Direct JSI communication with near-zero latency
+- **🔐 Hardware-Backed Security**: Secure Enclave (iOS) and TEE Keystore (Android)
+- **⚡ Biometric Authentication**: Face ID, Touch ID, and device credentials
+- **🔒 Secure Storage**: Platform-specific secure storage (iOS Keychain, Android Keystore)
+- **🔐 PIN Authentication**: Fallback PIN with lockout protection
+- **✍️ Digital Signing**: Hardware-backed RSA key generation and signature creation
+- **🎯 TypeScript**: Full TypeScript support with comprehensive types
+- **📱 Cross-Platform**: iOS and Android support
+- **🔄 React Hooks**: Built-in `useAuth` hook for easy integration
 
 ## 📋 Requirements
 
-- **React Native** ≥ 0.74 (New Architecture)
+- **React Native** ≥ 0.74 (New Architecture required)
 - **react-native-nitro-modules**
-- **iOS** 11+ (Secure Enclave)
+- **iOS** 13+ (Secure Enclave)
 - **Android** API 23+ (Biometric API)
-- **PNPM** or **Yarn** workspaces
+- **Node.js** ≥ 18.0.0
 
-## 🛠️ Installation & Quickstart
-
-### 1. Install
-
-```bash
-# Add to workspace
-pnpm add react-native-biolink react-native-nitro-modules
-
-# Or with yarn
-yarn add react-native-biolink react-native-nitro-modules
-```
-
-### 2. Generate Bindings
-
-```bash
-# Run Nitrogen codegen
-npx nitrogen
-
-# Or with pnpm
-pnpm nitrogen
-```
-
-### 3. Rebuild Apps
-
-```bash
-# iOS
-cd ios && pod install && cd ..
-npx react-native run-ios
-
-# Android
-npx react-native run-android
-```
-
-### 4. Basic Usage
-
-```typescript
-import { authenticate, storeSecret, getSecret } from 'react-native-biolink';
-
-const handleLogin = async () => {
-  try {
-    const isAuthenticated = await authenticate(true); // with fallback
-
-    if (isAuthenticated) {
-      await storeSecret('user-token', 'your-secret-data');
-      const token = await getSecret('user-token');
-      console.log('Retrieved token:', token);
-    }
-  } catch (error) {
-    console.error('Authentication failed:', error);
-  }
-};
-```
-
-### 5. Secure API Requests
+## 🛠️ Quick Start
 
 ```typescript
 import {
+  authenticate,
+  storeSecret,
+  getSecret,
   getSignatureHeaders,
-  getSignatureHeadersWithPublicKey,
-} from 'react-native-biolink';
+  useAuth
+} from '@gmemmy/react-native-biolink';
 
-const makeSecureRequest = async () => {
-  const payload = { userId: 123, action: 'login' };
+// Biometric authentication with device fallback
+const isAuthenticated = await authenticate(true);
 
-  // Get signature headers
-  const headers = await getSignatureHeaders(payload);
+// Secure storage
+await storeSecret('user-token', 'your-secure-token');
+const token = await getSecret('user-token');
 
-  // Or include public key for verification
-  const fullHeaders = await getSignatureHeadersWithPublicKey(payload);
+// Digital signing for API requests
+const headers = await getSignatureHeaders({ userId: 123, action: 'login' });
 
-  // Use with fetch
-  const response = await fetch('/api/authenticate', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      ...fullHeaders,
-    },
-    body: JSON.stringify(payload),
-  });
-};
-```
+// React hook for authentication state
+import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 
-### 6. React Hook Usage
+function MyComponent() {
+  const { isAuthenticated, authenticate, isLoading, error } = useAuth();
 
-```typescript
-import { useAuth } from 'react-native-biolink';
-
-function LoginScreen() {
-  const { isAuthenticated, error, isLoading, authenticate } = useAuth();
-
-  const handleBiometricAuth = () => {
-    authenticate(true); // with device credential fallback
+  const handleLogin = async () => {
+    await authenticate(true); // with device fallback
   };
 
   return (
-    <Button
-      onPress={handleBiometricAuth}
+    <TouchableOpacity
+      onPress={handleLogin}
       disabled={isLoading}
-      title={isLoading ? 'Authenticating...' : 'Sign In with Biometrics'}
-    />
+      style={{
+        backgroundColor: '#007AFF',
+        padding: 16,
+        borderRadius: 8,
+        opacity: isLoading ? 0.6 : 1
+      }}
+    >
+      {isLoading ? (
+        <ActivityIndicator color="white" />
+      ) : (
+        <Text style={{ color: 'white', textAlign: 'center', fontWeight: '600' }}>
+          {isAuthenticated ? 'Authenticated' : 'Login with Biometrics'}
+        </Text>
+      )}
+    </TouchableOpacity>
   );
 }
 ```
 
-## 📚 Next Steps & Documentation
+## 📚 Documentation
 
-For detailed developer documentation, API reference, and advanced usage examples, see:
-
-**[📖 Developer Documentation →](./packages/react-native-biolink/README.md)**
-
-## 🎯 Demo App
-
-See the complete implementation in action:
-
-**[📱 Demo App Documentation →](./packages/biolink-demo/README.md)**
+- **[📖 Full API Documentation](./packages/react-native-biolink/README.md)** - Complete API reference, examples, and advanced usage
+- **[📱 Demo App](./biolink-demo/README.md)** - See the library in action
+- **[🐛 Issues](https://github.com/gmemmy/biolink/issues)** - Report bugs and request features
+- **[💬 Discussions](https://github.com/gmemmy/biolink/discussions)** - Ask questions and share ideas
 
 ## 📄 License
 
 MIT License - see [LICENSE](./LICENSE) for details.
-
----
