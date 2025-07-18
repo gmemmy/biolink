@@ -1,12 +1,13 @@
 # Biolink Demo App
 
-A minimal React Native demo app showcasing the Biolink biometric authentication library.
+A minimal React Native demo app showcasing the current features of the Biolink biometric authentication library.
 
-## Features
+## Current Features (v1.0)
 
-- **Biometric Authentication**: Demonstrates `signInWithBiometrics()` function
-- **Secure Storage**: Store and retrieve secrets with device keyboard
-- **PIN Authentication**: Complete enrollment and lockout flow
+- **Biometric Authentication**: Demonstrates `signInWithBiometrics()` function with device credential fallback
+- **Secure Storage**: Store and retrieve secrets using platform-specific secure storage
+- **PIN Authentication**: Complete enrollment and lockout flow with automatic retry limits
+- **Digital Signing**: Hardware-backed signature generation for API requests
 
 ## Screenshots
 
@@ -86,5 +87,14 @@ The demo app demonstrates:
 
 1. **Carousel Navigation**: Swipe or use navigation buttons to explore features
 2. **Biometric Authentication**: Two buttons - "Biometrics Only" and "Biometrics + Device PIN"
-3. **Secure Storage**: Store and retrieve secrets using device keyboard
+3. **Secure Storage**: Store and retrieve secrets using platform-specific secure storage
 4. **PIN Authentication**: Enroll, authenticate, and test lockout functionality
+5. **Digital Signing**: Generate signed headers for API requests
+
+## Future Features
+
+The demo will be expanded to showcase:
+
+- **FIDO2/WebAuthn Passkeys**: Full passkey authentication flows
+- **Analytics Integration**: Event tracking and audit logging
+- **Advanced Security**: Multi-factor authentication and compliance features

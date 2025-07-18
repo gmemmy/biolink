@@ -8,7 +8,7 @@ A fast biometric authentication and secure storage module for React Native's new
 
 > **📖 Developer Documentation** - This is the complete API reference and developer guide. For a quick overview, see the [README](../../README.md).
 
-## Features
+## Current Features (v1.0)
 
 - ⚡ **Biometric Authentication** - Face ID, Touch ID, and device credentials
 - 🔒 **Secure Storage** - Platform-specific secure storage (iOS Keychain, Android Keystore)
@@ -19,6 +19,19 @@ A fast biometric authentication and secure storage module for React Native's new
 - 📱 **Cross-Platform** - iOS and Android support
 - 🚀 **Performance Optimized** - Cached operations and minimal overhead
 - 🔄 **React Hooks** - Built-in `useAuth` hook for easy integration
+
+## Roadmap
+
+### Phase 6: DX Tooling & Reliability
+
+- **CI/CD & E2E Testing** - Comprehensive test suite with Detox/Appium
+- **Expo Config Plugin** - Zero-config setup for Expo projects
+- **Enhanced Documentation** - Migration guides and advanced recipes
+
+### Phase 7: Advanced Security & Observability
+
+- **FIDO2/WebAuthn Passkeys** - Full passkey support with RP ID validation
+- **Analytics & Observability** - Built-in event tracking and audit logging
 
 ## Requirements
 

@@ -22,7 +22,7 @@ yarn add @gmemmy/react-native-biolink react-native-nitro-modules
 
 **React Native Biolink** is a high-performance biometric authentication and secure storage library built on [Nitro Modules](https://nitro.margelo.com) for React Native's New Architecture. Unlike bridge-based libraries, Biolink uses Nitro's JSI implementation for **near-zero latency** native communication.
 
-### Key Features
+### Current Features (v1.0)
 
 - **🔗 Bridge-Free**: Direct JSI communication with near-zero latency
 - **🔐 Hardware-Backed Security**: Secure Enclave (iOS) and TEE Keystore (Android)
@@ -34,6 +34,12 @@ yarn add @gmemmy/react-native-biolink react-native-nitro-modules
 - **📱 Cross-Platform**: iOS and Android support
 - **🔄 React Hooks**: Built-in `useAuth` hook for easy integration
 
+### Coming Soon
+
+- **🔐 FIDO2/WebAuthn Passkeys**: Full passkey support with RP ID validation
+- **📊 Analytics & Observability**: Built-in event tracking and audit logging
+- **🔧 Expo Config Plugin**: Zero-config setup for Expo projects
+
 ## 📋 Requirements
 
 - **React Native** ≥ 0.74 (New Architecture required)
@@ -42,59 +48,7 @@ yarn add @gmemmy/react-native-biolink react-native-nitro-modules
 - **Android** API 23+ (Biometric API)
 - **Node.js** ≥ 18.0.0
 
-## 🛠️ Quick Start
-
-```typescript
-import {
-  authenticate,
-  storeSecret,
-  getSecret,
-  getSignatureHeaders,
-  useAuth
-} from '@gmemmy/react-native-biolink';
-
-// Biometric authentication with device fallback
-const isAuthenticated = await authenticate(true);
-
-// Secure storage
-await storeSecret('user-token', 'your-secure-token');
-const token = await getSecret('user-token');
-
-// Digital signing for API requests
-const headers = await getSignatureHeaders({ userId: 123, action: 'login' });
-
-// React hook for authentication state
-import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-
-function MyComponent() {
-  const { isAuthenticated, authenticate, isLoading, error } = useAuth();
-
-  const handleLogin = async () => {
-    await authenticate(true); // with device fallback
-  };
-
-  return (
-    <TouchableOpacity
-      onPress={handleLogin}
-      disabled={isLoading}
-      style={{
-        backgroundColor: '#007AFF',
-        padding: 16,
-        borderRadius: 8,
-        opacity: isLoading ? 0.6 : 1
-      }}
-    >
-      {isLoading ? (
-        <ActivityIndicator color="white" />
-      ) : (
-        <Text style={{ color: 'white', textAlign: 'center', fontWeight: '600' }}>
-          {isAuthenticated ? 'Authenticated' : 'Login with Biometrics'}
-        </Text>
-      )}
-    </TouchableOpacity>
-  );
-}
-```
+For complete usage examples, API documentation, and advanced features, see the **[📖 Package Documentation](./packages/react-native-biolink/README.md)**.
 
 ## 📚 Documentation
 

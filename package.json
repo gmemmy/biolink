@@ -9,10 +9,10 @@
   ],
   "scripts": {
     "build": "pnpm -r run build",
-    "lint": "eslint . --fix",
-    "lint:check": "eslint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "lint": "eslint . --fix --config config/eslint.config.js",
+    "lint:check": "eslint . --config config/eslint.config.js",
+    "format": "prettier --write . --config config/.prettierrc",
+    "format:check": "prettier --check . --config config/.prettierrc",
     "test": "pnpm -r run test",
     "clean": "pnpm -r run clean",
     "prepare": "husky install",
@@ -36,11 +36,11 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix --config config/eslint.config.js",
+      "prettier --write --config config/.prettierrc"
     ],
     "**/*.{js,jsx,json,md}": [
-      "prettier --write"
+      "prettier --write --config config/.prettierrc"
     ]
   },
   "engines": {

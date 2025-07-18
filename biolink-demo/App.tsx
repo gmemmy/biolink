@@ -275,7 +275,7 @@ function SecureStorageSection({ isDarkMode }: { isDarkMode: boolean }) {
   const [storeValue, setStoreValue] = React.useState('');
   const [retrieveKey, setRetrieveKey] = React.useState('');
   const [retrievedValue, setRetrievedValue] = React.useState<string | null>(
-    null,
+    null
   );
   const [message, setMessage] = React.useState('');
 
@@ -292,7 +292,7 @@ function SecureStorageSection({ isDarkMode }: { isDarkMode: boolean }) {
       setStoreValue('');
     } catch (error) {
       setMessage(
-        `❌ Failed to store: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        `❌ Failed to store: ${error instanceof Error ? error.message : 'Unknown error'}`
       );
     }
   };
@@ -314,7 +314,7 @@ function SecureStorageSection({ isDarkMode }: { isDarkMode: boolean }) {
       }
     } catch (error) {
       setMessage(
-        `❌ Failed to retrieve: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        `❌ Failed to retrieve: ${error instanceof Error ? error.message : 'Unknown error'}`
       );
     }
   };
@@ -494,7 +494,7 @@ function PinAuthSection({ isDarkMode }: { isDarkMode: boolean }) {
         setPinMessage(`❌ ${error.message}`);
       } else {
         setPinMessage(
-          `❌ Failed to enroll PIN: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          `❌ Failed to enroll PIN: ${error instanceof Error ? error.message : 'Unknown error'}`
         );
       }
     }
@@ -521,7 +521,7 @@ function PinAuthSection({ isDarkMode }: { isDarkMode: boolean }) {
         setPinLockoutStatus(status);
       } else {
         setPinMessage(
-          `❌ Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          `❌ Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
         );
       }
     }
@@ -536,7 +536,7 @@ function PinAuthSection({ isDarkMode }: { isDarkMode: boolean }) {
       setPinLockoutStatus(status);
     } catch (error) {
       setPinMessage(
-        `❌ Failed to clear lockout: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        `❌ Failed to clear lockout: ${error instanceof Error ? error.message : 'Unknown error'}`
       );
     }
   };
@@ -679,12 +679,12 @@ function SigningSection({ isDarkMode }: { isDarkMode: boolean }) {
 
       const signatureHeaders = await getSignatureHeaders(payload);
       setSignatureResult(
-        `Signature: ${signatureHeaders['X-Body-Signature'].substring(0, 50)}...`,
+        `Signature: ${signatureHeaders['X-Body-Signature'].substring(0, 50)}...`
       );
 
       const fullHeaders = await getSignatureHeadersWithPublicKey(payload);
       setPublicKeyResult(
-        `Public Key: ${fullHeaders['X-Public-Key'].substring(0, 50)}...`,
+        `Public Key: ${fullHeaders['X-Public-Key'].substring(0, 50)}...`
       );
 
       const mockResponse = await mockFetchWithHeaders(payload, fullHeaders);
@@ -705,7 +705,7 @@ function SigningSection({ isDarkMode }: { isDarkMode: boolean }) {
         'Signing Availability',
         available
           ? 'Signing capabilities are available'
-          : 'Signing capabilities are not available',
+          : 'Signing capabilities are not available'
       );
     } catch {
       Alert.alert('Error', 'Failed to check signing availability');
@@ -714,7 +714,7 @@ function SigningSection({ isDarkMode }: { isDarkMode: boolean }) {
 
   const mockFetchWithHeaders = async (
     payload: object,
-    headers: Record<string, string>,
+    headers: Record<string, string>
   ) => {
     // Simulate network delay
     await new Promise<void>(resolve => {
