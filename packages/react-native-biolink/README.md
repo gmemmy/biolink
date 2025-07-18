@@ -24,7 +24,6 @@ A fast biometric authentication and secure storage module for React Native's new
 
 ### Phase 6: DX Tooling & Reliability
 
-- **CI/CD & E2E Testing** - Comprehensive test suite with Detox/Appium
 - **Expo Config Plugin** - Zero-config setup for Expo projects
 - **Enhanced Documentation** - Migration guides and advanced recipes
 

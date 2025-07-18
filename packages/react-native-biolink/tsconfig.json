@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "types": ["jest"],
+
     "lib": ["ES2020", "DOM"],
     "baseUrl": ".",
     "paths": {
@@ -26,5 +26,5 @@
     }
   },
   "include": ["src/**/*", "specs/**/*"],
-  "exclude": ["node_modules", "dist", "nitrogen/generated"]
+  "exclude": ["node_modules", "dist", "nitrogen/generated", "__tests__/**/*"]
 }
