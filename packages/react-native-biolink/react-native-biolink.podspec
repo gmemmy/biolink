@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
     :ios => "12.0"
   }
   
-  spec.source        = { :git => "https://github.com/biolink/react-native-biolink.git", :tag => "#{spec.version}" }
+  spec.source        = { :git => "https://github.com/gmemmy/biolink.git", :tag => "#{spec.version}" }
   
   spec.source_files  = "ios/**/*.{h,m,mm,swift}"
   spec.swift_version = "5.9"
