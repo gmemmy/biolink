@@ -1,5 +1,7 @@
 import { logger, consoleTransport } from 'react-native-logs';
 
+declare const __DEV__: boolean;
+
 /**
  * Logger interface for Biolink modules
  */

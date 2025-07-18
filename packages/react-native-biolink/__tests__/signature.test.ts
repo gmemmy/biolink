@@ -4,8 +4,8 @@ import {
   isSigningAvailable,
   SIGNATURE_CONFIG,
   __resetSignatureCache,
+  __setCoreForTesting,
 } from '../src/utils/signature';
-import { __setCoreForTesting } from '../src/index';
 import type { BiolinkCore } from '../specs/BiolinkCore.nitro';
 
 jest.mock('react-native-nitro-modules', () => ({
