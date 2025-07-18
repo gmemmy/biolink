@@ -17,4 +17,5 @@ export default {
     '<rootDir>/nitrogen/generated/',
   ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  silent: true,
 };

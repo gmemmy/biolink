@@ -41,7 +41,7 @@ let _core: BiolinkCore | null = null;
 
 function getCore(): BiolinkCore {
   if (!_core) {
-    _core = NitroModules.createHybridObject<BiolinkCore>('BiolinkCore');
+    _core = NitroModules.get<BiolinkCore>('BiolinkCore');
   }
   return _core;
 }

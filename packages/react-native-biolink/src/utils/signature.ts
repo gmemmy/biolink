@@ -10,9 +10,15 @@ let isSigningAvailableCache: boolean | null = null;
 async function getCoreInstance(): Promise<BiolinkCore> {
   if (!coreInstance) {
     const { NitroModules } = await import('react-native-nitro-modules');
-    coreInstance = NitroModules.createHybridObject<BiolinkCore>('BiolinkCore');
+    coreInstance = NitroModules.get<BiolinkCore>('BiolinkCore');
   }
   return coreInstance;
+}
+
+export function __setCoreForTesting(mockCore: BiolinkCore | null) {
+  coreInstance = mockCore;
+  publicKeyCache = null;
+  isSigningAvailableCache = null;
 }
 
 async function getCachedPublicKey(): Promise<string> {

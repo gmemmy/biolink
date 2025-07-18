@@ -2,13 +2,13 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "lib",
+    "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
     "jsx": "react-native",
     "target": "ES2020",
-    "module": "CommonJS",
+    "module": "ESNext",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -25,6 +25,6 @@
       "../nitrogen/*": ["nitrogen/*"]
     }
   },
-  "include": ["src/**/*", "specs/**/*", "__tests__/**/*"],
-  "exclude": ["node_modules", "lib", "nitrogen/generated"]
+  "include": ["src/**/*", "specs/**/*"],
+  "exclude": ["node_modules", "dist", "nitrogen/generated"]
 }
