@@ -46,7 +46,6 @@ function getCore(): BiolinkCore {
   return _core;
 }
 
-// For testing - inject mock core
 export function __setCoreForTesting(mockCore: BiolinkCore | null) {
   _core = mockCore;
 }

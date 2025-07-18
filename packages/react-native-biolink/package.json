@@ -1,6 +1,6 @@
 {
   "name": "@gmemmy/react-native-biolink",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Native biometric authentication and secure storage library using Nitro modules for bridge-free native communication",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
