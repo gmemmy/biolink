@@ -45,6 +45,14 @@ namespace margelo::nitro::biolink::native::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(const std::string& /* result */)>
+  Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = BiolinkCore::Func_void_std__string::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const std::string& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>
   std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec> create_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(void* _Nonnull swiftUnsafePointer) {
     BiolinkCore::HybridBiolinkCoreSpec_cxx swiftPart = BiolinkCore::HybridBiolinkCoreSpec_cxx::fromUnsafe(swiftUnsafePointer);

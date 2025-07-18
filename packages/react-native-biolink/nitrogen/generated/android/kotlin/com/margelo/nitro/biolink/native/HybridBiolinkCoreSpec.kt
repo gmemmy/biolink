@@ -51,6 +51,14 @@ abstract class HybridBiolinkCoreSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun getSecret(key: String): Promise<String?>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun signChallenge(challenge: String): Promise<String>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun getPublicKey(): Promise<String>
 
   private external fun initHybrid(): HybridData
 

@@ -27,6 +27,10 @@ A **bridge-free** biometric authentication and secure storage library built on N
 await authenticate(fallbackToDeviceCredential?: boolean)
 await storeSecret(key: string, value: string)
 const secret = await getSecret(key: string)
+
+// Cryptographic signing for secure API requests
+const headers = await getSignatureHeaders(requestBody)
+const fullHeaders = await getSignatureHeadersWithPublicKey(requestBody)
 ```
 
 ### **Hardware-Backed Security**
@@ -35,6 +39,7 @@ const secret = await getSecret(key: string)
 - **Android**: TEE Keystore
 - **Fallback**: Device credential (PIN/pattern)
 - **PIN Auth**: App-managed PIN with lockout
+- **Request Signing**: Cryptographic signatures for API security
 
 ### **Headless Design**
 
@@ -115,7 +120,36 @@ const handleLogin = async () => {
 };
 ```
 
-### 5. React Hook Usage
+### 5. Secure API Requests
+
+```typescript
+import {
+  getSignatureHeaders,
+  getSignatureHeadersWithPublicKey,
+} from 'react-native-biolink';
+
+const makeSecureRequest = async () => {
+  const payload = { userId: 123, action: 'login' };
+
+  // Get signature headers
+  const headers = await getSignatureHeaders(payload);
+
+  // Or include public key for verification
+  const fullHeaders = await getSignatureHeadersWithPublicKey(payload);
+
+  // Use with fetch
+  const response = await fetch('/api/authenticate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...fullHeaders,
+    },
+    body: JSON.stringify(payload),
+  });
+};
+```
+
+### 6. React Hook Usage
 
 ```typescript
 import { useAuth } from 'react-native-biolink';

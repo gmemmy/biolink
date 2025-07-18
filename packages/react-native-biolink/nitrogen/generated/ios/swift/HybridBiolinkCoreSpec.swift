@@ -17,6 +17,8 @@ public protocol HybridBiolinkCoreSpec_protocol: HybridObject {
   func authenticate(fallbackToDeviceCredential: Bool?) throws -> Promise<Bool>
   func storeSecret(key: String, value: String) throws -> Promise<Void>
   func getSecret(key: String) throws -> Promise<String?>
+  func signChallenge(challenge: String) throws -> Promise<String>
+  func getPublicKey() throws -> Promise<String>
 }
 
 /// See ``HybridBiolinkCoreSpec``

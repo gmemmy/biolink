@@ -22,6 +22,9 @@ import {
   clearPinLockout,
   storeSecret,
   getSecret,
+  getSignatureHeaders,
+  getSignatureHeadersWithPublicKey,
+  isSigningAvailable,
   PinAuthError,
   type PinLockoutStatus,
 } from 'react-native-biolink';
@@ -45,6 +48,11 @@ const FEATURES = [
     id: 'pin',
     title: '🔢 PIN Authentication',
     description: 'Test PIN enrollment, authentication, and lockout system',
+  },
+  {
+    id: 'signing',
+    title: '✍️ Request Signing',
+    description: 'Test cryptographic signing for secure API requests',
   },
 ];
 
@@ -103,6 +111,9 @@ function App() {
           </View>
           <View style={[styles.slide, { width: SCREEN_WIDTH }]}>
             <PinAuthSection isDarkMode={isDarkMode} />
+          </View>
+          <View style={[styles.slide, { width: SCREEN_WIDTH }]}>
+            <SigningSection isDarkMode={isDarkMode} />
           </View>
         </ScrollView>
         <View style={styles.indicatorContainer}>
@@ -643,6 +654,193 @@ function PinAuthSection({ isDarkMode }: { isDarkMode: boolean }) {
           </Text>
         </View>
       )}
+    </View>
+  );
+}
+
+function SigningSection({ isDarkMode }: { isDarkMode: boolean }) {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [signatureResult, setSignatureResult] = React.useState<string>('');
+  const [publicKeyResult, setPublicKeyResult] = React.useState<string>('');
+  const [fetchResult, setFetchResult] = React.useState<string>('');
+
+  const handleTestSigning = async () => {
+    setIsLoading(true);
+    setSignatureResult('');
+    setPublicKeyResult('');
+    setFetchResult('');
+
+    try {
+      const payload = {
+        userId: 123,
+        action: 'login',
+        timestamp: Date.now(),
+      };
+
+      const signatureHeaders = await getSignatureHeaders(payload);
+      setSignatureResult(
+        `Signature: ${signatureHeaders['X-Body-Signature'].substring(0, 50)}...`,
+      );
+
+      const fullHeaders = await getSignatureHeadersWithPublicKey(payload);
+      setPublicKeyResult(
+        `Public Key: ${fullHeaders['X-Public-Key'].substring(0, 50)}...`,
+      );
+
+      const mockResponse = await mockFetchWithHeaders(payload, fullHeaders);
+      setFetchResult(`Mock API Response: ${mockResponse}`);
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Unknown error';
+      setSignatureResult(`Error: ${errorMessage}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCheckAvailability = async () => {
+    try {
+      const available = await isSigningAvailable();
+      Alert.alert(
+        'Signing Availability',
+        available
+          ? 'Signing capabilities are available'
+          : 'Signing capabilities are not available',
+      );
+    } catch {
+      Alert.alert('Error', 'Failed to check signing availability');
+    }
+  };
+
+  const mockFetchWithHeaders = async (
+    payload: object,
+    headers: Record<string, string>,
+  ) => {
+    // Simulate network delay
+    await new Promise<void>(resolve => {
+      setTimeout(() => resolve(), 500);
+    });
+
+    return `Success! Headers sent: ${Object.keys(headers).join(', ')}`;
+  };
+
+  return (
+    <View style={styles.sectionContent}>
+      <Text
+        style={[
+          styles.sectionDescription,
+          { color: isDarkMode ? '#fff' : '#000' },
+        ]}
+      >
+        Test cryptographic signing for secure API requests. This demonstrates
+        how to sign request bodies and include signatures in HTTP headers.
+      </Text>
+
+      <ScrollView
+        style={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[
+              styles.button,
+              styles.primaryButton,
+              isLoading && styles.buttonDisabled,
+            ]}
+            onPress={handleTestSigning}
+            disabled={isLoading}
+          >
+            <Text style={styles.buttonText}>
+              {isLoading ? 'Signing...' : 'Test Request Signing'}
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, styles.secondaryButton]}
+            onPress={handleCheckAvailability}
+          >
+            <Text style={styles.buttonText}>Check Signing Availability</Text>
+          </TouchableOpacity>
+        </View>
+
+        {signatureResult && (
+          <View
+            style={[
+              styles.resultContainer,
+              { backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f9fa' },
+            ]}
+          >
+            <Text
+              style={[
+                styles.resultLabel,
+                { color: isDarkMode ? '#fff' : '#000' },
+              ]}
+            >
+              Signature Result:
+            </Text>
+            <Text
+              style={[
+                styles.resultValue,
+                { color: isDarkMode ? '#fff' : '#000' },
+              ]}
+            >
+              {signatureResult}
+            </Text>
+          </View>
+        )}
+
+        {publicKeyResult && (
+          <View
+            style={[
+              styles.resultContainer,
+              { backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f9fa' },
+            ]}
+          >
+            <Text
+              style={[
+                styles.resultLabel,
+                { color: isDarkMode ? '#fff' : '#000' },
+              ]}
+            >
+              Public Key Result:
+            </Text>
+            <Text
+              style={[
+                styles.resultValue,
+                { color: isDarkMode ? '#fff' : '#000' },
+              ]}
+            >
+              {publicKeyResult}
+            </Text>
+          </View>
+        )}
+
+        {fetchResult && (
+          <View
+            style={[
+              styles.resultContainer,
+              { backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f9fa' },
+            ]}
+          >
+            <Text
+              style={[
+                styles.resultLabel,
+                { color: isDarkMode ? '#fff' : '#000' },
+              ]}
+            >
+              Mock API Call:
+            </Text>
+            <Text
+              style={[
+                styles.resultValue,
+                { color: isDarkMode ? '#fff' : '#000' },
+              ]}
+            >
+              {fetchResult}
+            </Text>
+          </View>
+        )}
+      </ScrollView>
     </View>
   );
 }

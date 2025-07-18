@@ -528,3 +528,9 @@ export function useAuth(): UseAuthReturn {
 export type { BiolinkCore } from '../specs/BiolinkCore.nitro';
 export { getLogger, setLogger, resetLogger } from './logger';
 export type { Logger } from './logger';
+export {
+  getSignatureHeaders,
+  getSignatureHeadersWithPublicKey,
+  isSigningAvailable,
+  SIGNATURE_CONFIG,
+} from './utils/signature';

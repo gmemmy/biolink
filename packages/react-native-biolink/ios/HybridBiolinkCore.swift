@@ -113,4 +113,97 @@ public class HybridBiolinkCore: HybridBiolinkCoreSpec {
             }
         }
     }
+    
+    public func signChallenge(challenge: String) throws -> Promise<String> {
+        os_log(.debug, log: .default, "BiolinkCore: signChallenge() called with challenge length: %d", challenge.count)
+        
+        return Promise<String>.async {
+            let bundleID = Bundle.main.bundleIdentifier ?? "com.biolink.default"
+            let keyTag = "\(bundleID).signing.key"
+            let privateKey = try self.getOrCreateSigningKey(tag: keyTag)
+        
+            guard let challengeData = challenge.data(using: .utf8) else {
+                throw NSError(domain: "BiolinkCore", code: 1005, userInfo: [NSLocalizedDescriptionKey: "Failed to convert challenge to data"])
+            }
+            
+            var error: Unmanaged<CFError>?
+            guard let signatureData = SecKeyCreateSignature(
+                privateKey,
+                .rsaSignatureMessagePKCS1v15SHA256,
+                challengeData as CFData,
+                &error
+            ) else {
+                let errorDescription = error?.takeRetainedValue().localizedDescription ?? "Unknown error"
+                os_log(.error, log: .default, "BiolinkCore: Failed to create signature - %@", errorDescription)
+                throw NSError(domain: "BiolinkCore", code: 1006, userInfo: [NSLocalizedDescriptionKey: "Failed to create signature: \(errorDescription)"])
+            }
+            
+            let base64Signature = (signatureData as Data).base64EncodedString()
+            os_log(.info, log: .default, "BiolinkCore: Signature created successfully, length: %d", base64Signature.count)
+            
+            return base64Signature
+        }
+    }
+    
+    public func getPublicKey() throws -> Promise<String> {
+        os_log(.debug, log: .default, "BiolinkCore: getPublicKey() called")
+        
+        return Promise<String>.async {
+            let bundleID = Bundle.main.bundleIdentifier ?? "com.biolink.default"
+            let keyTag = "\(bundleID).signing.key"
+            let privateKey = try self.getOrCreateSigningKey(tag: keyTag)
+            
+            guard let publicKey = SecKeyCopyPublicKey(privateKey) else {
+                throw NSError(domain: "BiolinkCore", code: 1007, userInfo: [NSLocalizedDescriptionKey: "Failed to get public key"])
+            }
+            
+            var error: Unmanaged<CFError>?
+            guard let publicKeyData = SecKeyCopyExternalRepresentation(publicKey, &error) else {
+                throw NSError(domain: "BiolinkCore", code: 1008, userInfo: [NSLocalizedDescriptionKey: "Failed to export public key: \(error?.takeRetainedValue().localizedDescription ?? "Unknown error")"])
+            }
+            
+            let base64PublicKey = (publicKeyData as Data).base64EncodedString()
+            os_log(.info, log: .default, "BiolinkCore: Public key retrieved successfully, length: %d", base64PublicKey.count)
+            
+            return base64PublicKey
+        }
+    }
+    
+    private func getOrCreateSigningKey(tag: String) throws -> SecKey {
+        // Check if key already exists
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassKey,
+            kSecAttrApplicationTag as String: tag,
+            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+            kSecReturnRef as String: true
+        ]
+        
+        var result: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        
+        if status == errSecSuccess, let key = result {
+            return key as! SecKey
+        }
+        
+        // Create new key pair
+        let attributes: [String: Any] = [
+            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+            kSecAttrKeySizeInBits as String: 2048,
+            kSecPrivateKeyAttrs as String: [
+                kSecAttrApplicationTag as String: tag,
+                kSecAttrIsPermanent as String: true,
+                kSecAttrAccessible as String: kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+            ]
+        ]
+        
+        var error: Unmanaged<CFError>?
+        guard let privateKey = SecKeyCreateRandomKey(attributes as CFDictionary, &error) else {
+            let errorDescription = error?.takeRetainedValue().localizedDescription ?? "Unknown error"
+            os_log(.error, log: .default, "BiolinkCore: Failed to create signing key: %@", errorDescription)
+            throw NSError(domain: "BiolinkCore", code: 1009, userInfo: [NSLocalizedDescriptionKey: "Failed to create signing key: \(errorDescription)"])
+        }
+        
+        os_log(.info, log: .default, "BiolinkCore: Created new signing key with tag: %@", tag)
+        return privateKey
+    }
 }

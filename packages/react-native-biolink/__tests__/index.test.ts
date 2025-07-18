@@ -36,6 +36,8 @@ describe('BioLink Authentication', () => {
       authenticate: jest.fn(),
       storeSecret: jest.fn(),
       getSecret: jest.fn(),
+      signChallenge: jest.fn(),
+      getPublicKey: jest.fn(),
       name: 'MockBiolinkCore',
       equals: jest.fn(),
       dispose: jest.fn(),

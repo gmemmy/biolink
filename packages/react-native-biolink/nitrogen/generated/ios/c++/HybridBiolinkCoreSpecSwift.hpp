@@ -81,6 +81,22 @@ namespace margelo::nitro::biolink::native {
       auto __value = std::move(__result.value());
       return __value;
     }
+    inline std::shared_ptr<Promise<std::string>> signChallenge(const std::string& challenge) override {
+      auto __result = _swiftPart.signChallenge(challenge);
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<std::string>> getPublicKey() override {
+      auto __result = _swiftPart.getPublicKey();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
 
   private:
     BiolinkCore::HybridBiolinkCoreSpec_cxx _swiftPart;

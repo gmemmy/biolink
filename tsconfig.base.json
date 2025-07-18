@@ -19,10 +19,8 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@biolink/core-native": ["packages/core-native/src"],
-      "@biolink/core-native/*": ["packages/core-native/src/*"],
-      "@biolink/js-wrapper": ["packages/js-wrapper/src"],
-      "@biolink/js-wrapper/*": ["packages/js-wrapper/src/*"]
+      "@biolink/core-native": ["packages/react-native-biolink/src"],
+      "@biolink/core-native/*": ["packages/react-native-biolink/src/*"]
     }
   },
   "exclude": [

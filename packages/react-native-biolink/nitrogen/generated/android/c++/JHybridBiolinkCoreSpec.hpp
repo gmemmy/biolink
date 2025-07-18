@@ -54,6 +54,8 @@ namespace margelo::nitro::biolink::native {
     std::shared_ptr<Promise<bool>> authenticate(std::optional<bool> fallbackToDeviceCredential) override;
     std::shared_ptr<Promise<void>> storeSecret(const std::string& key, const std::string& value) override;
     std::shared_ptr<Promise<std::optional<std::string>>> getSecret(const std::string& key) override;
+    std::shared_ptr<Promise<std::string>> signChallenge(const std::string& challenge) override;
+    std::shared_ptr<Promise<std::string>> getPublicKey() override;
 
   private:
     friend HybridBase;

@@ -26,6 +26,7 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
         private const val TAG = "BiolinkCore"
         private const val PREFS_NAME = "biolink_secure_storage"
         private const val KEY_ALIAS = "biolink_encryption_key"
+        private const val SIGNING_KEY_ALIAS = "biolink_signing_key"
     }
     
     private val sharedPrefs: SharedPreferences by lazy {
@@ -217,6 +218,83 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
             
             keyGenerator.init(keyGenParameterSpec)
             keyGenerator.generateKey()
+        }
+    }
+    
+    override fun signChallenge(challenge: String): Promise<String> {
+        Log.d(TAG, "signChallenge() called with challenge length: ${challenge.length}")
+        
+        return Promise.create { resolve, reject ->
+            try {
+                val privateKey = getOrCreateSigningKey()
+                val signature = Signature.getInstance("SHA256withRSA")
+                signature.initSign(privateKey)
+                signature.update(challenge.toByteArray())
+                
+                val signatureBytes = signature.sign()
+                val base64Signature = Base64.encodeToString(signatureBytes, Base64.DEFAULT)
+                
+                Log.i(TAG, "Signature created successfully, length: ${base64Signature.length}")
+                resolve(base64Signature)
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to create signature: ${e.message}", e)
+                reject("SIGNATURE_ERROR", "Failed to create signature: ${e.message}")
+            }
+        }
+    }
+    
+    override fun getPublicKey(): Promise<String> {
+        Log.d(TAG, "getPublicKey() called")
+        
+        return Promise.create { resolve, reject ->
+            try {
+                val keyStore = KeyStore.getInstance("AndroidKeyStore")
+                keyStore.load(null)
+                
+                if (!keyStore.containsAlias(SIGNING_KEY_ALIAS)) {
+                    getOrCreateSigningKey()
+                }
+                
+                val keyPair = keyStore.getEntry(SIGNING_KEY_ALIAS, null) as KeyStore.PrivateKeyEntry
+                val publicKey = keyPair.certificate.publicKey
+                
+                val base64PublicKey = Base64.encodeToString(publicKey.encoded, Base64.DEFAULT)
+                
+                Log.i(TAG, "Public key retrieved successfully, length: ${base64PublicKey.length}")
+                resolve(base64PublicKey)
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to get public key: ${e.message}", e)
+                reject("PUBLIC_KEY_ERROR", "Failed to get public key: ${e.message}")
+            }
+        }
+    }
+    
+    private fun getOrCreateSigningKey(): PrivateKey {
+        val keyStore = KeyStore.getInstance("AndroidKeyStore")
+        keyStore.load(null)
+        
+        return if (keyStore.containsAlias(SIGNING_KEY_ALIAS)) {
+            keyStore.getKey(SIGNING_KEY_ALIAS, null) as PrivateKey
+        } else {
+            val keyPairGenerator = KeyPairGenerator.getInstance(
+                KeyProperties.KEY_ALGORITHM_RSA, 
+                "AndroidKeyStore"
+            )
+            
+            val keyGenParameterSpec = KeyGenParameterSpec.Builder(
+                SIGNING_KEY_ALIAS,
+                KeyProperties.PURPOSE_SIGN or KeyProperties.PURPOSE_VERIFY
+            )
+                .setDigests(KeyProperties.DIGEST_SHA256)
+                .setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1)
+                .setUserAuthenticationRequired(false)
+                .build()
+            
+            keyPairGenerator.initialize(keyGenParameterSpec)
+            val keyPair = keyPairGenerator.generateKeyPair()
+            keyPair.private
         }
     }
 }
