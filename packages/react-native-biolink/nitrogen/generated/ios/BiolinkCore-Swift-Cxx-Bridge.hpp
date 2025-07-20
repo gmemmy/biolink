@@ -8,15 +8,24 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `BiometryType` to properly resolve imports.
+namespace margelo::nitro::biolink::native { enum class BiometryType; }
 // Forward declaration of `HybridBiolinkCoreSpec` to properly resolve imports.
 namespace margelo::nitro::biolink::native { class HybridBiolinkCoreSpec; }
+// Forward declaration of `SensorAvailability` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+// Forward declaration of `SimplePromptOptions` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridBiolinkCoreSpec_cxx` to properly resolve imports.
 namespace BiolinkCore { class HybridBiolinkCoreSpec_cxx; }
 
 // Include C++ defined types
+#include "BiometryType.hpp"
 #include "HybridBiolinkCoreSpec.hpp"
+#include "SensorAvailability.hpp"
+#include "SimplePromptOptions.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/PromiseHolder.hpp>
 #include <NitroModules/Result.hpp>
@@ -54,13 +63,13 @@ namespace margelo::nitro::biolink::native::bridge::swift {
    */
   class Func_void_bool_Wrapper final {
   public:
-    explicit Func_void_bool_Wrapper(std::function<void(bool /* result */)>&& func): _function(std::make_shared<std::function<void(bool /* result */)>>(std::move(func))) {}
+    explicit Func_void_bool_Wrapper(std::function<void(bool /* result */)>&& func): _function(std::make_unique<std::function<void(bool /* result */)>>(std::move(func))) {}
     inline void call(bool result) const {
       _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(bool /* result */)>> _function;
-  };
+    std::unique_ptr<std::function<void(bool /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
   Func_void_bool create_Func_void_bool(void* _Nonnull swiftClosureWrapper);
   inline Func_void_bool_Wrapper wrap_Func_void_bool(Func_void_bool value) {
     return Func_void_bool_Wrapper(std::move(value));
@@ -76,13 +85,13 @@ namespace margelo::nitro::biolink::native::bridge::swift {
    */
   class Func_void_std__exception_ptr_Wrapper final {
   public:
-    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::make_shared<std::function<void(const std::exception_ptr& /* error */)>>(std::move(func))) {}
+    explicit Func_void_std__exception_ptr_Wrapper(std::function<void(const std::exception_ptr& /* error */)>&& func): _function(std::make_unique<std::function<void(const std::exception_ptr& /* error */)>>(std::move(func))) {}
     inline void call(std::exception_ptr error) const {
       _function->operator()(error);
     }
   private:
-    std::shared_ptr<std::function<void(const std::exception_ptr& /* error */)>> _function;
-  };
+    std::unique_ptr<std::function<void(const std::exception_ptr& /* error */)>> _function;
+  } SWIFT_NONCOPYABLE;
   Func_void_std__exception_ptr create_Func_void_std__exception_ptr(void* _Nonnull swiftClosureWrapper);
   inline Func_void_std__exception_ptr_Wrapper wrap_Func_void_std__exception_ptr(Func_void_std__exception_ptr value) {
     return Func_void_std__exception_ptr_Wrapper(std::move(value));
@@ -119,13 +128,13 @@ namespace margelo::nitro::biolink::native::bridge::swift {
    */
   class Func_void_Wrapper final {
   public:
-    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_shared<std::function<void()>>(std::move(func))) {}
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_unique<std::function<void()>>(std::move(func))) {}
     inline void call() const {
       _function->operator()();
     }
   private:
-    std::shared_ptr<std::function<void()>> _function;
-  };
+    std::unique_ptr<std::function<void()>> _function;
+  } SWIFT_NONCOPYABLE;
   Func_void create_Func_void(void* _Nonnull swiftClosureWrapper);
   inline Func_void_Wrapper wrap_Func_void(Func_void value) {
     return Func_void_Wrapper(std::move(value));
@@ -162,13 +171,13 @@ namespace margelo::nitro::biolink::native::bridge::swift {
    */
   class Func_void_std__optional_std__string__Wrapper final {
   public:
-    explicit Func_void_std__optional_std__string__Wrapper(std::function<void(const std::optional<std::string>& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::optional<std::string>& /* result */)>>(std::move(func))) {}
+    explicit Func_void_std__optional_std__string__Wrapper(std::function<void(const std::optional<std::string>& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::optional<std::string>& /* result */)>>(std::move(func))) {}
     inline void call(std::optional<std::string> result) const {
       _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(const std::optional<std::string>& /* result */)>> _function;
-  };
+    std::unique_ptr<std::function<void(const std::optional<std::string>& /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
   Func_void_std__optional_std__string_ create_Func_void_std__optional_std__string_(void* _Nonnull swiftClosureWrapper);
   inline Func_void_std__optional_std__string__Wrapper wrap_Func_void_std__optional_std__string_(Func_void_std__optional_std__string_ value) {
     return Func_void_std__optional_std__string__Wrapper(std::move(value));
@@ -196,16 +205,59 @@ namespace margelo::nitro::biolink::native::bridge::swift {
    */
   class Func_void_std__string_Wrapper final {
   public:
-    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* result */)>&& func): _function(std::make_shared<std::function<void(const std::string& /* result */)>>(std::move(func))) {}
+    explicit Func_void_std__string_Wrapper(std::function<void(const std::string& /* result */)>&& func): _function(std::make_unique<std::function<void(const std::string& /* result */)>>(std::move(func))) {}
     inline void call(std::string result) const {
       _function->operator()(result);
     }
   private:
-    std::shared_ptr<std::function<void(const std::string& /* result */)>> _function;
-  };
+    std::unique_ptr<std::function<void(const std::string& /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
   Func_void_std__string create_Func_void_std__string(void* _Nonnull swiftClosureWrapper);
   inline Func_void_std__string_Wrapper wrap_Func_void_std__string(Func_void_std__string value) {
     return Func_void_std__string_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::shared_ptr<Promise<SensorAvailability>>
+  /**
+   * Specialized version of `std::shared_ptr<Promise<SensorAvailability>>`.
+   */
+  using std__shared_ptr_Promise_SensorAvailability__ = std::shared_ptr<Promise<SensorAvailability>>;
+  inline std::shared_ptr<Promise<SensorAvailability>> create_std__shared_ptr_Promise_SensorAvailability__() {
+    return Promise<SensorAvailability>::create();
+  }
+  inline PromiseHolder<SensorAvailability> wrap_std__shared_ptr_Promise_SensorAvailability__(std::shared_ptr<Promise<SensorAvailability>> promise) {
+    return PromiseHolder<SensorAvailability>(std::move(promise));
+  }
+  
+  // pragma MARK: std::function<void(const SensorAvailability& /* result */)>
+  /**
+   * Specialized version of `std::function<void(const SensorAvailability&)>`.
+   */
+  using Func_void_SensorAvailability = std::function<void(const SensorAvailability& /* result */)>;
+  /**
+   * Wrapper class for a `std::function<void(const SensorAvailability& / * result * /)>`, this can be used from Swift.
+   */
+  class Func_void_SensorAvailability_Wrapper final {
+  public:
+    explicit Func_void_SensorAvailability_Wrapper(std::function<void(const SensorAvailability& /* result */)>&& func): _function(std::make_unique<std::function<void(const SensorAvailability& /* result */)>>(std::move(func))) {}
+    inline void call(SensorAvailability result) const {
+      _function->operator()(result);
+    }
+  private:
+    std::unique_ptr<std::function<void(const SensorAvailability& /* result */)>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void_SensorAvailability create_Func_void_SensorAvailability(void* _Nonnull swiftClosureWrapper);
+  inline Func_void_SensorAvailability_Wrapper wrap_Func_void_SensorAvailability(Func_void_SensorAvailability value) {
+    return Func_void_SensorAvailability_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::optional<SimplePromptOptions>
+  /**
+   * Specialized version of `std::optional<SimplePromptOptions>`.
+   */
+  using std__optional_SimplePromptOptions_ = std::optional<SimplePromptOptions>;
+  inline std::optional<SimplePromptOptions> create_std__optional_SimplePromptOptions_(const SimplePromptOptions& value) {
+    return std::optional<SimplePromptOptions>(value);
   }
   
   // pragma MARK: std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>
@@ -254,6 +306,15 @@ namespace margelo::nitro::biolink::native::bridge::swift {
   }
   inline Result_std__shared_ptr_Promise_std__string___ create_Result_std__shared_ptr_Promise_std__string___(const std::exception_ptr& error) {
     return Result<std::shared_ptr<Promise<std::string>>>::withError(error);
+  }
+  
+  // pragma MARK: Result<std::shared_ptr<Promise<SensorAvailability>>>
+  using Result_std__shared_ptr_Promise_SensorAvailability___ = Result<std::shared_ptr<Promise<SensorAvailability>>>;
+  inline Result_std__shared_ptr_Promise_SensorAvailability___ create_Result_std__shared_ptr_Promise_SensorAvailability___(const std::shared_ptr<Promise<SensorAvailability>>& value) {
+    return Result<std::shared_ptr<Promise<SensorAvailability>>>::withValue(value);
+  }
+  inline Result_std__shared_ptr_Promise_SensorAvailability___ create_Result_std__shared_ptr_Promise_SensorAvailability___(const std::exception_ptr& error) {
+    return Result<std::shared_ptr<Promise<SensorAvailability>>>::withError(error);
   }
 
 } // namespace margelo::nitro::biolink::native::bridge::swift

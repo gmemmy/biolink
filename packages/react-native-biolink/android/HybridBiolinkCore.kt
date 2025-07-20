@@ -297,4 +297,154 @@ class HybridBiolinkCore(private val reactContext: ReactApplicationContext) : Hyb
             keyPair.private
         }
     }
+    
+    override fun isSensorAvailable(): Promise<SensorAvailability> {
+        Log.d(TAG, "isSensorAvailable() called")
+        
+        return Promise.create { resolve, reject ->
+            try {
+                val biometricManager = BiometricManager.from(reactContext)
+                val canAuthenticate = biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)
+                
+                val available = when (canAuthenticate) {
+                    BiometricManager.BIOMETRIC_SUCCESS -> true
+                    else -> false
+                }
+                
+                val biometryType = when (canAuthenticate) {
+                    BiometricManager.BIOMETRIC_SUCCESS -> {
+                        val packageManager = reactContext.packageManager
+                        if (packageManager.hasSystemFeature("android.hardware.fingerprint")) {
+                            BiometryType.TOUCHID
+                        } else if (packageManager.hasSystemFeature("android.hardware.face")) {
+                            BiometryType.FACEID
+                        } else {
+                            BiometryType.BIOMETRICS
+                        }
+                    }
+                    else -> BiometryType.NONE
+                }
+                
+                val result = SensorAvailability(available, biometryType)
+                Log.i(TAG, "Sensor availability: ${result.available}, type: ${result.biometryType}")
+                resolve(result)
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to check sensor availability: ${e.message}", e)
+                reject("SENSOR_CHECK_ERROR", "Failed to check sensor availability: ${e.message}")
+            }
+        }
+    }
+    
+    override fun biometricKeysExist(): Promise<Boolean> {
+        Log.d(TAG, "biometricKeysExist() called")
+        
+        return Promise.create { resolve, reject ->
+            try {
+                val keyStore = KeyStore.getInstance("AndroidKeyStore")
+                keyStore.load(null)
+                
+                val exists = keyStore.containsAlias(SIGNING_KEY_ALIAS)
+                Log.i(TAG, "Biometric keys exist: $exists")
+                resolve(exists)
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to check if biometric keys exist: ${e.message}", e)
+                reject("KEY_CHECK_ERROR", "Failed to check if biometric keys exist: ${e.message}")
+            }
+        }
+    }
+    
+    override fun deleteKeys(): Promise<Unit> {
+        Log.d(TAG, "deleteKeys() called")
+        
+        return Promise.create { resolve, reject ->
+            try {
+                val keyStore = KeyStore.getInstance("AndroidKeyStore")
+                keyStore.load(null)
+                
+                if (keyStore.containsAlias(SIGNING_KEY_ALIAS)) {
+                    keyStore.deleteEntry(SIGNING_KEY_ALIAS)
+                    Log.i(TAG, "Keys deleted successfully")
+                } else {
+                    Log.d(TAG, "No keys found to delete")
+                }
+                
+                resolve(Unit)
+                
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to delete keys: ${e.message}", e)
+                reject("KEY_DELETE_ERROR", "Failed to delete keys: ${e.message}")
+            }
+        }
+    }
+    
+    override fun simplePrompt(options: SimplePromptOptions?): Promise<Boolean> {
+        val promptMessage = options?.promptMessage ?: "Authenticate to continue"
+        Log.d(TAG, "simplePrompt() called with message: $promptMessage")
+        
+        return Promise.create { resolve, reject ->
+            val currentActivity = reactContext.currentActivity
+            
+            if (currentActivity == null) {
+                Log.e(TAG, "Simple prompt failed: NO_ACTIVITY")
+                reject("NO_ACTIVITY", "No current activity available")
+                return@create
+            }
+            
+            if (currentActivity !is FragmentActivity) {
+                Log.e(TAG, "Simple prompt failed: INVALID_ACTIVITY")
+                reject("INVALID_ACTIVITY", "Current activity is not a FragmentActivity")
+                return@create
+            }
+            
+            val biometricManager = BiometricManager.from(reactContext)
+            when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
+                BiometricManager.BIOMETRIC_SUCCESS -> {
+                    Log.d(TAG, "Simple prompt is available")
+                }
+                else -> {
+                    Log.e(TAG, "Simple prompt failed: Authentication not available")
+                    reject("NO_AUTH", "Authentication is not available")
+                    return@create
+                }
+            }
+            
+            val executor: Executor = ContextCompat.getMainExecutor(reactContext)
+            var startTime: Long = 0
+            
+            val biometricPrompt = BiometricPrompt(currentActivity, executor, object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    val duration = SystemClock.elapsedRealtime() - startTime
+                    Log.e(TAG, "Simple prompt failed: $errorCode - $errString - native took ${duration}ms")
+                    reject("AUTH_FAILED_$errorCode", errString.toString())
+                }
+                
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    val duration = SystemClock.elapsedRealtime() - startTime
+                    Log.i(TAG, "Simple prompt successful - native took ${duration}ms")
+                    resolve(true)
+                }
+                
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    val duration = SystemClock.elapsedRealtime() - startTime
+                    Log.w(TAG, "Simple prompt failed - user authentication not recognized - native took ${duration}ms")
+                }
+            })
+            
+            val promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Authentication Required")
+                .setSubtitle(promptMessage)
+                .setNegativeButtonText(options?.cancelButtonText ?: "Cancel")
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
+                .build()
+            
+            Log.d(TAG, "Starting simple prompt")
+            startTime = SystemClock.elapsedRealtime()
+            biometricPrompt.authenticate(promptInfo)
+        }
+    }
 }

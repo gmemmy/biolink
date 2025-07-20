@@ -7,12 +7,23 @@
 
 #include "JHybridBiolinkCoreSpec.hpp"
 
-
+// Forward declaration of `SensorAvailability` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+// Forward declaration of `BiometryType` to properly resolve imports.
+namespace margelo::nitro::biolink::native { enum class BiometryType; }
+// Forward declaration of `SimplePromptOptions` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
 
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/JPromise.hpp>
 #include <optional>
 #include <string>
+#include "SensorAvailability.hpp"
+#include "JSensorAvailability.hpp"
+#include "BiometryType.hpp"
+#include "JBiometryType.hpp"
+#include "SimplePromptOptions.hpp"
+#include "JSimplePromptOptions.hpp"
 
 namespace margelo::nitro::biolink::native {
 
@@ -106,6 +117,69 @@ namespace margelo::nitro::biolink::native {
       __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
         auto __result = jni::static_ref_cast<jni::JString>(__boxedResult);
         __promise->resolve(__result->toStdString());
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<SensorAvailability>> JHybridBiolinkCoreSpec::isSensorAvailable() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>()>("isSensorAvailable");
+    auto __result = method(_javaPart);
+    return [&]() {
+      auto __promise = Promise<SensorAvailability>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<JSensorAvailability>(__boxedResult);
+        __promise->resolve(__result->toCpp());
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<bool>> JHybridBiolinkCoreSpec::biometricKeysExist() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>()>("biometricKeysExist");
+    auto __result = method(_javaPart);
+    return [&]() {
+      auto __promise = Promise<bool>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<jni::JBoolean>(__boxedResult);
+        __promise->resolve(static_cast<bool>(__result->value()));
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<void>> JHybridBiolinkCoreSpec::deleteKeys() {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>()>("deleteKeys");
+    auto __result = method(_javaPart);
+    return [&]() {
+      auto __promise = Promise<void>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& /* unit */) {
+        __promise->resolve();
+      });
+      __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
+        jni::JniException __jniError(__throwable);
+        __promise->reject(std::make_exception_ptr(__jniError));
+      });
+      return __promise;
+    }();
+  }
+  std::shared_ptr<Promise<bool>> JHybridBiolinkCoreSpec::simplePrompt(const std::optional<SimplePromptOptions>& options) {
+    static const auto method = javaClassStatic()->getMethod<jni::local_ref<JPromise::javaobject>(jni::alias_ref<JSimplePromptOptions> /* options */)>("simplePrompt");
+    auto __result = method(_javaPart, options.has_value() ? JSimplePromptOptions::fromCpp(options.value()) : nullptr);
+    return [&]() {
+      auto __promise = Promise<bool>::create();
+      __result->cthis()->addOnResolvedListener([=](const jni::alias_ref<jni::JObject>& __boxedResult) {
+        auto __result = jni::static_ref_cast<jni::JBoolean>(__boxedResult);
+        __promise->resolve(static_cast<bool>(__result->value()));
       });
       __result->cthis()->addOnRejectedListener([=](const jni::alias_ref<jni::JThrowable>& __throwable) {
         jni::JniException __jniError(__throwable);

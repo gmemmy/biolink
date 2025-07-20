@@ -56,6 +56,10 @@ namespace margelo::nitro::biolink::native {
     std::shared_ptr<Promise<std::optional<std::string>>> getSecret(const std::string& key) override;
     std::shared_ptr<Promise<std::string>> signChallenge(const std::string& challenge) override;
     std::shared_ptr<Promise<std::string>> getPublicKey() override;
+    std::shared_ptr<Promise<SensorAvailability>> isSensorAvailable() override;
+    std::shared_ptr<Promise<bool>> biometricKeysExist() override;
+    std::shared_ptr<Promise<void>> deleteKeys() override;
+    std::shared_ptr<Promise<bool>> simplePrompt(const std::optional<SimplePromptOptions>& options) override;
 
   private:
     friend HybridBase;

@@ -8,11 +8,20 @@
 #pragma once
 
 // Forward declarations of C++ defined types
+// Forward declaration of `BiometryType` to properly resolve imports.
+namespace margelo::nitro::biolink::native { enum class BiometryType; }
 // Forward declaration of `HybridBiolinkCoreSpec` to properly resolve imports.
 namespace margelo::nitro::biolink::native { class HybridBiolinkCoreSpec; }
+// Forward declaration of `SensorAvailability` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+// Forward declaration of `SimplePromptOptions` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
 
 // Include C++ defined types
+#include "BiometryType.hpp"
 #include "HybridBiolinkCoreSpec.hpp"
+#include "SensorAvailability.hpp"
+#include "SimplePromptOptions.hpp"
 #include <NitroModules/Promise.hpp>
 #include <NitroModules/Result.hpp>
 #include <exception>
@@ -25,7 +34,7 @@ namespace margelo::nitro::biolink::native { class HybridBiolinkCoreSpec; }
 
 // Common C++ types used in Swift
 #include <NitroModules/ArrayBufferHolder.hpp>
-#include <NitroModules/AnyMapHolder.hpp>
+#include <NitroModules/AnyMapUtils.hpp>
 #include <NitroModules/RuntimeError.hpp>
 #include <NitroModules/DateToChronoDate.hpp>
 

@@ -59,6 +59,22 @@ abstract class HybridBiolinkCoreSpec: HybridObject() {
   @DoNotStrip
   @Keep
   abstract fun getPublicKey(): Promise<String>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun isSensorAvailable(): Promise<SensorAvailability>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun biometricKeysExist(): Promise<Boolean>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun deleteKeys(): Promise<Unit>
+  
+  @DoNotStrip
+  @Keep
+  abstract fun simplePrompt(options: SimplePromptOptions?): Promise<Boolean>
 
   private external fun initHybrid(): HybridData
 

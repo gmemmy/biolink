@@ -12,11 +12,19 @@
 // Forward declaration of `HybridBiolinkCoreSpec_cxx` to properly resolve imports.
 namespace BiolinkCore { class HybridBiolinkCoreSpec_cxx; }
 
-
+// Forward declaration of `SensorAvailability` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+// Forward declaration of `BiometryType` to properly resolve imports.
+namespace margelo::nitro::biolink::native { enum class BiometryType; }
+// Forward declaration of `SimplePromptOptions` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
 
 #include <NitroModules/Promise.hpp>
 #include <optional>
 #include <string>
+#include "SensorAvailability.hpp"
+#include "BiometryType.hpp"
+#include "SimplePromptOptions.hpp"
 
 #include "BiolinkCore-Swift-Cxx-Umbrella.hpp"
 
@@ -91,6 +99,38 @@ namespace margelo::nitro::biolink::native {
     }
     inline std::shared_ptr<Promise<std::string>> getPublicKey() override {
       auto __result = _swiftPart.getPublicKey();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<SensorAvailability>> isSensorAvailable() override {
+      auto __result = _swiftPart.isSensorAvailable();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<bool>> biometricKeysExist() override {
+      auto __result = _swiftPart.biometricKeysExist();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<void>> deleteKeys() override {
+      auto __result = _swiftPart.deleteKeys();
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
+      auto __value = std::move(__result.value());
+      return __value;
+    }
+    inline std::shared_ptr<Promise<bool>> simplePrompt(const std::optional<SimplePromptOptions>& options) override {
+      auto __result = _swiftPart.simplePrompt(options);
       if (__result.hasError()) [[unlikely]] {
         std::rethrow_exception(__result.error());
       }

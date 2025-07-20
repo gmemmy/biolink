@@ -206,4 +206,109 @@ public class HybridBiolinkCore: HybridBiolinkCoreSpec {
         os_log(.info, log: .default, "BiolinkCore: Created new signing key with tag: %@", tag)
         return privateKey
     }
+    
+    public func isSensorAvailable() throws -> Promise<SensorAvailability> {
+        os_log(.debug, log: .default, "BiolinkCore: isSensorAvailable() called")
+        
+        return Promise<SensorAvailability>.async {
+            let context = LAContext()
+            var error: NSError?
+            
+            let canEvaluate = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
+            
+            if canEvaluate {
+                let biometryType: BiometryType
+                switch context.biometryType {
+                case .touchID:
+                    biometryType = .touchid
+                case .faceID:
+                    biometryType = .faceid
+                default:
+                    biometryType = .biometrics
+                }
+                
+                os_log(.info, log: .default, "BiolinkCore: Sensor available with type: %@", biometryType.rawValue)
+                return SensorAvailability(available: true, biometryType: biometryType)
+            } else {
+                os_log(.info, log: .default, "BiolinkCore: No biometric sensor available")
+                return SensorAvailability(available: false, biometryType: .none)
+            }
+        }
+    }
+    
+    public func biometricKeysExist() throws -> Promise<Bool> {
+        os_log(.debug, log: .default, "BiolinkCore: biometricKeysExist() called")
+        
+        return Promise<Bool>.async {
+            let bundleID = Bundle.main.bundleIdentifier ?? "com.biolink.default"
+            let keyTag = "\(bundleID).signing.key"
+            
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassKey,
+                kSecAttrApplicationTag as String: keyTag,
+                kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+                kSecReturnRef as String: true
+            ]
+            
+            var result: CFTypeRef?
+            let status = SecItemCopyMatching(query as CFDictionary, &result)
+            
+            let exists = status == errSecSuccess
+            os_log(.info, log: .default, "BiolinkCore: Biometric keys exist: %@", exists ? "true" : "false")
+            return exists
+        }
+    }
+    
+    public func deleteKeys() throws -> Promise<Void> {
+        os_log(.debug, log: .default, "BiolinkCore: deleteKeys() called")
+        
+        return Promise<Void>.async {
+            let bundleID = Bundle.main.bundleIdentifier ?? "com.biolink.default"
+            let keyTag = "\(bundleID).signing.key"
+            
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassKey,
+                kSecAttrApplicationTag as String: keyTag,
+                kSecAttrKeyType as String: kSecAttrKeyTypeRSA
+            ]
+            
+            let status = SecItemDelete(query as CFDictionary)
+            
+            if status == errSecSuccess || status == errSecItemNotFound {
+                os_log(.info, log: .default, "BiolinkCore: Keys deleted successfully")
+                return
+            } else {
+                os_log(.error, log: .default, "BiolinkCore: Failed to delete keys with status: %d", status)
+                throw NSError(domain: "BiolinkCore", code: 1010, userInfo: [NSLocalizedDescriptionKey: "Failed to delete keys from keychain"])
+            }
+        }
+    }
+    
+    public func simplePrompt(options: SimplePromptOptions?) throws -> Promise<Bool> {
+        let promptMessage = options?.promptMessage ?? "Authenticate to continue"
+        os_log(.debug, log: .default, "BiolinkCore: simplePrompt() called with message: %@", promptMessage)
+        
+        return Promise<Bool>.async {
+            let context = LAContext()
+            var error: NSError?
+            
+            guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
+                os_log(.error, log: .default, "BiolinkCore: Simple prompt not available - %@", error?.localizedDescription ?? "Unknown error")
+                throw NSError(domain: "BiolinkCore", code: 1011, userInfo: [NSLocalizedDescriptionKey: "Authentication is not available"])
+            }
+            
+            return try await withCheckedThrowingContinuation { continuation in
+                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: promptMessage) { success, authError in
+                    if success {
+                        os_log(.info, log: .default, "BiolinkCore: Simple prompt successful")
+                        continuation.resume(returning: true)
+                    } else {
+                        os_log(.error, log: .default, "BiolinkCore: Simple prompt failed - %@", authError?.localizedDescription ?? "Unknown error")
+                        let error = authError ?? NSError(domain: "BiolinkCore", code: 1012, userInfo: [NSLocalizedDescriptionKey: "Authentication failed"])
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        }
+    }
 }

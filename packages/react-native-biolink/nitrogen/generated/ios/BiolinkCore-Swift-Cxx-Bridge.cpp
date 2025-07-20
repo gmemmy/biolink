@@ -53,6 +53,14 @@ namespace margelo::nitro::biolink::native::bridge::swift {
     };
   }
   
+  // pragma MARK: std::function<void(const SensorAvailability& /* result */)>
+  Func_void_SensorAvailability create_Func_void_SensorAvailability(void* _Nonnull swiftClosureWrapper) {
+    auto swiftClosure = BiolinkCore::Func_void_SensorAvailability::fromUnsafe(swiftClosureWrapper);
+    return [swiftClosure = std::move(swiftClosure)](const SensorAvailability& result) mutable -> void {
+      swiftClosure.call(result);
+    };
+  }
+  
   // pragma MARK: std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>
   std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec> create_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(void* _Nonnull swiftUnsafePointer) {
     BiolinkCore::HybridBiolinkCoreSpec_cxx swiftPart = BiolinkCore::HybridBiolinkCoreSpec_cxx::fromUnsafe(swiftUnsafePointer);

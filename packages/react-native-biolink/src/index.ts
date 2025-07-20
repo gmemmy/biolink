@@ -1,6 +1,10 @@
 import { useState, useCallback } from 'react';
 import { NitroModules } from 'react-native-nitro-modules';
-import type { BiolinkCore } from '../specs/BiolinkCore.nitro';
+import type {
+  BiolinkCore,
+  SensorAvailability,
+  SimplePromptOptions,
+} from '../specs/BiolinkCore.nitro';
 import { getLogger } from './logger';
 
 export interface PinLockoutStatus {
@@ -239,7 +243,6 @@ export async function getPinLockoutStatus(): Promise<PinLockoutStatus> {
         ? new Date(lastAttempt.getTime() + PIN_CONFIG.lockoutDuration)
         : undefined;
 
-    // Check if lockout has expired
     const now = new Date();
     const lockoutExpired = lockoutEndsAt && now >= lockoutEndsAt;
 
@@ -323,11 +326,9 @@ export async function enrollPin(pin: string): Promise<void> {
   try {
     logger.debug('Enrolling PIN');
 
-    // Generate salt and hash the PIN
     const salt = await generateSalt();
     const hash = await hashPin(pin, salt);
 
-    // Store salt and hash
     await Promise.all([
       core.storeSecret(PIN_CONFIG.saltKey, salt),
       core.storeSecret(PIN_CONFIG.hashKey, hash),
@@ -524,7 +525,102 @@ export function useAuth(): UseAuthReturn {
   };
 }
 
-export type { BiolinkCore } from '../specs/BiolinkCore.nitro';
+/**
+ * Check whether a biometric sensor is available and its type
+ * @returns Promise<SensorAvailability> - Object containing availability status and biometry type
+ */
+export async function isSensorAvailable(): Promise<SensorAvailability> {
+  const logger = getLogger();
+  const core = getCore();
+
+  try {
+    logger.debug('Checking sensor availability');
+    const result = await core.isSensorAvailable();
+    logger.info(
+      `Sensor availability: ${result.available}, type: ${result.biometryType}`
+    );
+    return result;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    logger.error('Failed to check sensor availability:', errorMessage);
+    throw error;
+  }
+}
+
+/**
+ * Check if biometric keys exist in the secure store
+ * @returns Promise<boolean> - true if keys exist, false otherwise
+ */
+export async function biometricKeysExist(): Promise<boolean> {
+  const logger = getLogger();
+  const core = getCore();
+
+  try {
+    logger.debug('Checking if biometric keys exist');
+    const result = await core.biometricKeysExist();
+    logger.info(`Biometric keys exist: ${result}`);
+    return result;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    logger.error('Failed to check if biometric keys exist:', errorMessage);
+    throw error;
+  }
+}
+
+/**
+ * Delete biometric keys from the secure store
+ * @returns Promise<void> - resolves on success, rejects on error
+ */
+export async function deleteKeys(): Promise<void> {
+  const logger = getLogger();
+  const core = getCore();
+
+  try {
+    logger.debug('Deleting biometric keys');
+    await core.deleteKeys();
+    logger.info('Biometric keys deleted successfully');
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    logger.error('Failed to delete biometric keys:', errorMessage);
+    throw error;
+  }
+}
+
+/**
+ * Show a simple biometric prompt for authentication
+ * @param options - Optional configuration for the prompt
+ * @returns Promise<boolean> - true on successful authentication, false on cancel
+ */
+export async function simplePrompt(
+  options?: SimplePromptOptions
+): Promise<boolean> {
+  const logger = getLogger();
+  const core = getCore();
+
+  try {
+    logger.debug(
+      `Starting simple prompt with options: ${JSON.stringify(options)}`
+    );
+    const result = await core.simplePrompt(options);
+    logger.info(`Simple prompt result: ${result}`);
+    return result;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    logger.error('Simple prompt failed:', errorMessage);
+    throw error;
+  }
+}
+
+export type {
+  BiolinkCore,
+  SensorAvailability,
+  SimplePromptOptions,
+  BiometryType,
+} from '../specs/BiolinkCore.nitro';
 export { getLogger, setLogger, resetLogger } from './logger';
 export type { Logger } from './logger';
 export {

@@ -19,6 +19,10 @@ public protocol HybridBiolinkCoreSpec_protocol: HybridObject {
   func getSecret(key: String) throws -> Promise<String?>
   func signChallenge(challenge: String) throws -> Promise<String>
   func getPublicKey() throws -> Promise<String>
+  func isSensorAvailable() throws -> Promise<SensorAvailability>
+  func biometricKeysExist() throws -> Promise<Bool>
+  func deleteKeys() throws -> Promise<Void>
+  func simplePrompt(options: SimplePromptOptions?) throws -> Promise<Bool>
 }
 
 /// See ``HybridBiolinkCoreSpec``

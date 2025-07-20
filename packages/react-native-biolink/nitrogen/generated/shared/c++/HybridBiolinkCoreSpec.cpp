@@ -19,6 +19,10 @@ namespace margelo::nitro::biolink::native {
       prototype.registerHybridMethod("getSecret", &HybridBiolinkCoreSpec::getSecret);
       prototype.registerHybridMethod("signChallenge", &HybridBiolinkCoreSpec::signChallenge);
       prototype.registerHybridMethod("getPublicKey", &HybridBiolinkCoreSpec::getPublicKey);
+      prototype.registerHybridMethod("isSensorAvailable", &HybridBiolinkCoreSpec::isSensorAvailable);
+      prototype.registerHybridMethod("biometricKeysExist", &HybridBiolinkCoreSpec::biometricKeysExist);
+      prototype.registerHybridMethod("deleteKeys", &HybridBiolinkCoreSpec::deleteKeys);
+      prototype.registerHybridMethod("simplePrompt", &HybridBiolinkCoreSpec::simplePrompt);
     });
   }
 

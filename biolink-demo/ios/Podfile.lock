@@ -1748,7 +1748,7 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - SocketRocket
-  - react-native-biolink (1.0.5):
+  - react-native-biolink (1.0.6):
     - NitroModules
   - react-native-blur (4.4.1):
     - boost
@@ -2369,65 +2369,6 @@ PODS:
     - React-perflogger (= 0.81.0-rc.0)
     - React-utils (= 0.81.0-rc.0)
     - SocketRocket
-  - RNScreens (4.13.1):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-RCTImage
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - RNScreens/common (= 4.13.1)
-    - SocketRocket
-    - Yoga
-  - RNScreens/common (4.13.1):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-RCTImage
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - RNVectorIcons (10.2.0):
     - boost
     - DoubleConversion
@@ -2535,7 +2476,6 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - SocketRocket (~> 0.7.1)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -2694,8 +2634,6 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  RNScreens:
-    :path: "../node_modules/react-native-screens"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -2743,7 +2681,7 @@ SPEC CHECKSUMS:
   React-logger: c7e141766582e403862b2e986f45f7b5a9099d6d
   React-Mapbuffer: 1bd8de39348006345e7c81699334131ef1a2fa38
   React-microtasksnativemodule: 4a37c01568355ee7d1c4afc3ee01e0e460ddcbe4
-  react-native-biolink: 983cefc073c0cfbda7c2c848ad94bd1b4f5977c6
+  react-native-biolink: 03e6174d9b985025cc19e07237d226df0b7baf7c
   react-native-blur: 6af83e7e3c4c1446a188d9b2c493600fc4beb173
   react-native-safe-area-context: 84a754cad3fbb25117482cde6b8defca6c6f6a53
   React-NativeModulesApple: 1fc3e6bc346e93c7602b43f3bab36bc046396386
@@ -2776,7 +2714,6 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 673b38067987ee6a6668c8ee5223d778cb68d3c7
   ReactCodegen: 6d210edb4645c3b45bdc0524aea69e8d06122485
   ReactCommon: 6f9c0a9ba2c9de7b730f5451409ed9f3125d384f
-  RNScreens: 40264381e0eca3f0c368c78f192f547ef40caa39
   RNVectorIcons: c13cc1db346e960ecd0aafcdd5d0bb458133b9c1
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 463fb69091efea832b3a9c5bc15cfaeac94b375c

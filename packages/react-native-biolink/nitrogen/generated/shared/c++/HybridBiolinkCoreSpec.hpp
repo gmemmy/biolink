@@ -13,11 +13,16 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-
+// Forward declaration of `SensorAvailability` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+// Forward declaration of `SimplePromptOptions` to properly resolve imports.
+namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
 
 #include <NitroModules/Promise.hpp>
 #include <optional>
 #include <string>
+#include "SensorAvailability.hpp"
+#include "SimplePromptOptions.hpp"
 
 namespace margelo::nitro::biolink::native {
 
@@ -55,6 +60,10 @@ namespace margelo::nitro::biolink::native {
       virtual std::shared_ptr<Promise<std::optional<std::string>>> getSecret(const std::string& key) = 0;
       virtual std::shared_ptr<Promise<std::string>> signChallenge(const std::string& challenge) = 0;
       virtual std::shared_ptr<Promise<std::string>> getPublicKey() = 0;
+      virtual std::shared_ptr<Promise<SensorAvailability>> isSensorAvailable() = 0;
+      virtual std::shared_ptr<Promise<bool>> biometricKeysExist() = 0;
+      virtual std::shared_ptr<Promise<void>> deleteKeys() = 0;
+      virtual std::shared_ptr<Promise<bool>> simplePrompt(const std::optional<SimplePromptOptions>& options) = 0;
 
     protected:
       // Hybrid Setup
