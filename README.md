@@ -1,10 +1,10 @@
 # React Native Biolink
 
-A **bridge-free** biometric authentication and secure storage library built on Nitro Modules for React Native 0.74+ with new Architecture enabled.
-
 [![CI](https://github.com/gmemmy/biolink/workflows/CI/badge.svg)](https://github.com/gmemmy/biolink/actions)
 [![npm version](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink.svg)](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
+
+A high-performance biometric authentication and secure storage library built on [Nitro Modules](https://nitro.margelo.com) for React Native's New Architecture. Unlike bridge-based libraries, Biolink uses Nitro's JSI implementation for **near-zero latency** native communication.
 
 ## NPM Package
 
@@ -18,27 +18,22 @@ pnpm add @gmemmy/react-native-biolink react-native-nitro-modules
 yarn add @gmemmy/react-native-biolink react-native-nitro-modules
 ```
 
-## Overview
-
-**React Native Biolink** is a high-performance biometric authentication and secure storage library built on [Nitro Modules](https://nitro.margelo.com) for React Native's New Architecture. Unlike bridge-based libraries, Biolink uses Nitro's JSI implementation for **near-zero latency** native communication.
-
 ### Current Features (v1.0)
 
-- **🔗 Bridge-Free**: Direct JSI communication with near-zero latency
-- **🔐 Hardware-Backed Security**: Secure Enclave (iOS) and TEE Keystore (Android)
-- **⚡ Biometric Authentication**: Face ID, Touch ID, and device credentials
-- **🔒 Secure Storage**: Platform-specific secure storage (iOS Keychain, Android Keystore)
-- **🔐 PIN Authentication**: Fallback PIN with lockout protection
-- **✍️ Digital Signing**: Hardware-backed RSA key generation and signature creation
-- **🎯 TypeScript**: Full TypeScript support with comprehensive types
-- **📱 Cross-Platform**: iOS and Android support
-- **🔄 React Hooks**: Built-in `useAuth` hook for easy integration
+- **Bridge-Free**: Direct JSI communication with near-zero latency
+- **Hardware-Backed Security**: Secure Enclave (iOS) and TEE Keystore (Android)
+- **Biometric Authentication**: Face ID, Touch ID, and device credentials
+- **Secure Storage**: Platform-specific secure storage (iOS Keychain, Android Keystore)
+- **PIN Authentication**: Fallback PIN with lockout protection
+- **Digital Signing**: Hardware-backed RSA key generation and signature creation
+- **Cross-Platform**: iOS and Android support
+- **React Hooks**: Built-in `useAuth` hook for easy integration
 
 ### Coming Soon
 
-- **🔐 FIDO2/WebAuthn Passkeys**: Full passkey support with RP ID validation
-- **📊 Analytics & Observability**: Built-in event tracking and audit logging
-- **🔧 Expo Config Plugin**: Zero-config setup for Expo projects
+- **FIDO2/WebAuthn Passkeys**: Full passkey support with RP ID validation
+- **Analytics & Observability**: Built-in event tracking and audit logging
+- **Expo Config Plugin**: Zero-config setup for Expo projects
 
 ## Requirements
 
@@ -46,7 +41,6 @@ yarn add @gmemmy/react-native-biolink react-native-nitro-modules
 - **react-native-nitro-modules**
 - **iOS** 13+ (Secure Enclave)
 - **Android** API 23+ (Biometric API)
-- **Node.js** ≥ 18.0.0
 
 For complete usage examples, API documentation, and advanced features, see the **[📖 Package Documentation](./packages/react-native-biolink/README.md)**.
 
