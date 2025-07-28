@@ -13,6 +13,7 @@
     "format": "prettier --write . --config config/.prettierrc",
     "format:check": "prettier --check . --config config/.prettierrc",
     "test": "pnpm -r run test",
+    "ci": "pnpm -r run build && pnpm -r run check-format && pnpm -r run test",
     "clean": "pnpm -r run clean",
     "clean:git": "git clean -fdX",
     "prepare": "husky install",

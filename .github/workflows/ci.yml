@@ -45,4 +45,3 @@ jobs:
 
       - name: Run CI script
         run: pnpm run ci
-        working-directory: packages/react-native-biolink

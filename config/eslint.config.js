@@ -70,6 +70,10 @@ export default [
       '**/dist/**',
       '**/build/**',
       '**/lib/**',
+      'android/build/',
+      'android/.cxx/',
+      'android/src/main/AndroidManifest.xml',
+      'android/src/main/cpp/',
     ],
   },
 ];

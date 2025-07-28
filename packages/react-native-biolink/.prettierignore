@@ -1,0 +1,6 @@
+dist/
+nitrogen/
+android/build/
+android/.cxx/
+android/src/main/AndroidManifest.xml
+android/src/main/cpp/
