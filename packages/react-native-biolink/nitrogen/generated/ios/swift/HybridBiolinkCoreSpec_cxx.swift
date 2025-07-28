@@ -19,11 +19,11 @@ import NitroModules
  */
 public class HybridBiolinkCoreSpec_cxx {
   /**
-   * The Swift <> C++ bridge's namespace (`margelo::nitro::biolink::native::bridge::swift`)
+   * The Swift <> C++ bridge's namespace (`margelo::nitro::biolink::bridge::swift`)
    * from `BiolinkCore-Swift-Cxx-Bridge.hpp`.
    * This contains specialized C++ templates, and C++ helper functions that can be accessed from Swift.
    */
-  public typealias bridge = margelo.nitro.biolink.native.bridge.swift
+  public typealias bridge = margelo.nitro.biolink.bridge.swift
 
   /**
    * Holds an instance of the `HybridBiolinkCoreSpec` Swift protocol.
@@ -33,7 +33,7 @@ public class HybridBiolinkCoreSpec_cxx {
   /**
    * Holds a weak pointer to the C++ class that wraps the Swift class.
    */
-  private var __cxxPart: bridge.std__weak_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_
+  private var __cxxPart: bridge.std__weak_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_
 
   /**
    * Create a new `HybridBiolinkCoreSpec_cxx` that wraps the given `HybridBiolinkCoreSpec`.
@@ -72,15 +72,15 @@ public class HybridBiolinkCoreSpec_cxx {
 
   /**
    * Gets (or creates) the C++ part of this Hybrid Object.
-   * The C++ part is a `std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>`.
+   * The C++ part is a `std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>`.
    */
-  public func getCxxPart() -> bridge.std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_ {
+  public func getCxxPart() -> bridge.std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_ {
     let cachedCxxPart = self.__cxxPart.lock()
     if cachedCxxPart.__convertToBool() {
       return cachedCxxPart
     } else {
-      let newCxxPart = bridge.create_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(self.toUnsafe())
-      __cxxPart = bridge.weakify_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(newCxxPart)
+      let newCxxPart = bridge.create_std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_(self.toUnsafe())
+      __cxxPart = bridge.weakify_std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_(newCxxPart)
       return newCxxPart
     }
   }

@@ -10,10 +10,10 @@ import NitroModules
 /**
  * Represents an instance of `SimplePromptOptions`, backed by a C++ struct.
  */
-public typealias SimplePromptOptions = margelo.nitro.biolink.native.SimplePromptOptions
+public typealias SimplePromptOptions = margelo.nitro.biolink.SimplePromptOptions
 
 public extension SimplePromptOptions {
-  private typealias bridge = margelo.nitro.biolink.native.bridge.swift
+  private typealias bridge = margelo.nitro.biolink.bridge.swift
 
   /**
    * Create a new instance of `SimplePromptOptions`.

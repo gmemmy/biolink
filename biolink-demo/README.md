@@ -4,7 +4,7 @@ A minimal React Native demo app showcasing the current features of the Biolink b
 
 ## Current Features (v1.0)
 
-- **Biometric Authentication**: Demonstrates `signInWithBiometrics()` function with device credential fallback
+- **Biometric Authentication**: Demonstrates biometric authentication with device credential fallback
 - **Secure Storage**: Store and retrieve secrets using platform-specific secure storage
 - **PIN Authentication**: Complete enrollment and lockout flow with automatic retry limits
 - **Digital Signing**: Hardware-backed signature generation for API requests
@@ -25,7 +25,7 @@ A minimal React Native demo app showcasing the current features of the Biolink b
 
 ## Built With
 
-- **React Native 0.81.0-rc.0**: Latest React Native with new architecture
+- **React Native 0.80.1**: Latest React Native with new architecture
 - **React 19.1.0**: Latest React with concurrent features
 - **TypeScript**: Full type safety
 - **react-native-biolink**: Custom biometric authentication library

@@ -13,11 +13,11 @@
 namespace BiolinkCore { class HybridBiolinkCoreSpec_cxx; }
 
 // Forward declaration of `SensorAvailability` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+namespace margelo::nitro::biolink { struct SensorAvailability; }
 // Forward declaration of `BiometryType` to properly resolve imports.
-namespace margelo::nitro::biolink::native { enum class BiometryType; }
+namespace margelo::nitro::biolink { enum class BiometryType; }
 // Forward declaration of `SimplePromptOptions` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
+namespace margelo::nitro::biolink { struct SimplePromptOptions; }
 
 #include <NitroModules/Promise.hpp>
 #include <optional>
@@ -28,7 +28,7 @@ namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
 
 #include "BiolinkCore-Swift-Cxx-Umbrella.hpp"
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   /**
    * The C++ part of HybridBiolinkCoreSpec_cxx.swift.
@@ -142,4 +142,4 @@ namespace margelo::nitro::biolink::native {
     BiolinkCore::HybridBiolinkCoreSpec_cxx _swiftPart;
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

@@ -8,7 +8,7 @@
 #include <jni.h>
 #include <NitroModules/NitroDefines.hpp>
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   /**
    * Initializes the native (C++) part of BiolinkCore, and autolinks all Hybrid Objects.
@@ -16,10 +16,10 @@ namespace margelo::nitro::biolink::native {
    * Example:
    * ```cpp (cpp-adapter.cpp)
    * JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
-   *   return margelo::nitro::biolink::native::initialize(vm);
+   *   return margelo::nitro::biolink::initialize(vm);
    * }
    * ```
    */
   int initialize(JavaVM* vm);
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

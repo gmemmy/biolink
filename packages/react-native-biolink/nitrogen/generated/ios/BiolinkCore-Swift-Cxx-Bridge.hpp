@@ -9,13 +9,13 @@
 
 // Forward declarations of C++ defined types
 // Forward declaration of `BiometryType` to properly resolve imports.
-namespace margelo::nitro::biolink::native { enum class BiometryType; }
+namespace margelo::nitro::biolink { enum class BiometryType; }
 // Forward declaration of `HybridBiolinkCoreSpec` to properly resolve imports.
-namespace margelo::nitro::biolink::native { class HybridBiolinkCoreSpec; }
+namespace margelo::nitro::biolink { class HybridBiolinkCoreSpec; }
 // Forward declaration of `SensorAvailability` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+namespace margelo::nitro::biolink { struct SensorAvailability; }
 // Forward declaration of `SimplePromptOptions` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
+namespace margelo::nitro::biolink { struct SimplePromptOptions; }
 
 // Forward declarations of Swift defined types
 // Forward declaration of `HybridBiolinkCoreSpec_cxx` to properly resolve imports.
@@ -39,7 +39,7 @@ namespace BiolinkCore { class HybridBiolinkCoreSpec_cxx; }
  * Contains specialized versions of C++ templated types so they can be accessed from Swift,
  * as well as helper functions to interact with those C++ types from Swift.
  */
-namespace margelo::nitro::biolink::native::bridge::swift {
+namespace margelo::nitro::biolink::bridge::swift {
 
   // pragma MARK: std::shared_ptr<Promise<bool>>
   /**
@@ -260,17 +260,17 @@ namespace margelo::nitro::biolink::native::bridge::swift {
     return std::optional<SimplePromptOptions>(value);
   }
   
-  // pragma MARK: std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>
+  // pragma MARK: std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>
   /**
-   * Specialized version of `std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>`.
+   * Specialized version of `std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>`.
    */
-  using std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_ = std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>;
-  std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec> create_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(void* _Nonnull swiftUnsafePointer);
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_ cppType);
+  using std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_ = std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>;
+  std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec> create_std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_(void* _Nonnull swiftUnsafePointer);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_(std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_ cppType);
   
-  // pragma MARK: std::weak_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>
-  using std__weak_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_ = std::weak_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>;
-  inline std__weak_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_ weakify_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(const std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>& strong) { return strong; }
+  // pragma MARK: std::weak_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>
+  using std__weak_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_ = std::weak_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>;
+  inline std__weak_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_ weakify_std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_(const std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>& strong) { return strong; }
   
   // pragma MARK: Result<std::shared_ptr<Promise<bool>>>
   using Result_std__shared_ptr_Promise_bool___ = Result<std::shared_ptr<Promise<bool>>>;
@@ -317,4 +317,4 @@ namespace margelo::nitro::biolink::native::bridge::swift {
     return Result<std::shared_ptr<Promise<SensorAvailability>>>::withError(error);
   }
 
-} // namespace margelo::nitro::biolink::native::bridge::swift
+} // namespace margelo::nitro::biolink::bridge::swift

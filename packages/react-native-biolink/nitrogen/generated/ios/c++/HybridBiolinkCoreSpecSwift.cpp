@@ -7,5 +7,5 @@
 
 #include "HybridBiolinkCoreSpecSwift.hpp"
 
-namespace margelo::nitro::biolink::native {
-} // namespace margelo::nitro::biolink::native
+namespace margelo::nitro::biolink {
+} // namespace margelo::nitro::biolink

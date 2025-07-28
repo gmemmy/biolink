@@ -6,9 +6,13 @@
 
 A high-performance biometric authentication and secure storage library built on [Nitro Modules](https://nitro.margelo.com) for React Native's New Architecture. Unlike bridge-based libraries, Biolink uses Nitro's JSI implementation for **near-zero latency** native communication.
 
+This README provides a high-level overview of the project. For detailed API documentation, usage examples, and advanced features, please refer to the [Package API Reference](./packages/react-native-biolink/README.md).
+
 ## NPM Package
 
 **[@gmemmy/react-native-biolink](https://www.npmjs.com/package/@gmemmy/react-native-biolink)**
+
+This library requires `react-native-nitro-modules` as a companion package for its JSI-based communication.
 
 ```bash
 npm install @gmemmy/react-native-biolink react-native-nitro-modules
@@ -42,11 +46,9 @@ yarn add @gmemmy/react-native-biolink react-native-nitro-modules
 - **iOS** 13+ (Secure Enclave)
 - **Android** API 23+ (Biometric API)
 
-For complete usage examples, API documentation, and advanced features, see the **[📖 Package Documentation](./packages/react-native-biolink/README.md)**.
-
 ## Documentation
 
-- **[📖 Full API Documentation](./packages/react-native-biolink/README.md)** - Complete API reference, examples, and advanced usage
+- **[📖 Package API Reference](./packages/react-native-biolink/README.md)** - Complete API reference, examples, and advanced usage
 - **[📱 Demo App](./biolink-demo/README.md)** - See the library in action
 - **[🐛 Issues](https://github.com/gmemmy/biolink/issues)** - Report bugs and request features
 - **[💬 Discussions](https://github.com/gmemmy/biolink/discussions)** - Ask questions and share ideas

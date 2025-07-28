@@ -14,14 +14,14 @@
 
 
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   using namespace facebook;
 
   class JHybridBiolinkCoreSpec: public jni::HybridClass<JHybridBiolinkCoreSpec, JHybridObject>,
                                 public virtual HybridBiolinkCoreSpec {
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/native/HybridBiolinkCoreSpec;";
+    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/HybridBiolinkCoreSpec;";
     static jni::local_ref<jhybriddata> initHybrid(jni::alias_ref<jhybridobject> jThis);
     static void registerNatives();
 
@@ -67,4 +67,4 @@ namespace margelo::nitro::biolink::native {
     jni::global_ref<JHybridBiolinkCoreSpec::javaobject> _javaPart;
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

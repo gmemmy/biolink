@@ -23,7 +23,7 @@
 #error NitroModules cannot be found! Are you sure you installed NitroModules properly?
 #endif
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   /**
    * An enum which can be represented as a JavaScript union (BiometryType).
@@ -35,11 +35,11 @@ namespace margelo::nitro::biolink::native {
     NONE      SWIFT_NAME(none) = 3,
   } CLOSED_ENUM;
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink
 
 namespace margelo::nitro {
 
-  using namespace margelo::nitro::biolink::native;
+  using namespace margelo::nitro::biolink;
 
   // C++ BiometryType <> JS BiometryType (union)
   template <>

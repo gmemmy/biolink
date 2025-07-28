@@ -10,7 +10,7 @@
 #include <fbjni/fbjni.h>
 #include "BiometryType.hpp"
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   using namespace facebook;
 
@@ -19,7 +19,7 @@ namespace margelo::nitro::biolink::native {
    */
   struct JBiometryType final: public jni::JavaClass<JBiometryType> {
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/native/BiometryType;";
+    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/BiometryType;";
 
   public:
     /**
@@ -62,4 +62,4 @@ namespace margelo::nitro::biolink::native {
     }
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

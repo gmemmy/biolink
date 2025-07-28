@@ -10,10 +10,10 @@ import NitroModules
 /**
  * Represents an instance of `SensorAvailability`, backed by a C++ struct.
  */
-public typealias SensorAvailability = margelo.nitro.biolink.native.SensorAvailability
+public typealias SensorAvailability = margelo.nitro.biolink.SensorAvailability
 
 public extension SensorAvailability {
-  private typealias bridge = margelo.nitro.biolink.native.bridge.swift
+  private typealias bridge = margelo.nitro.biolink.bridge.swift
 
   /**
    * Create a new instance of `SensorAvailability`.

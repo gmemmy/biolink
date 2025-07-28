@@ -19,12 +19,12 @@
 
 + (void) load {
   using namespace margelo::nitro;
-  using namespace margelo::nitro::biolink::native;
+  using namespace margelo::nitro::biolink;
 
   HybridObjectRegistry::registerHybridObjectConstructor(
     "BiolinkCore",
     []() -> std::shared_ptr<HybridObject> {
-      std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec> hybridObject = BiolinkCore::BiolinkCoreAutolinking::createBiolinkCore();
+      std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec> hybridObject = BiolinkCore::BiolinkCoreAutolinking::createBiolinkCore();
       return hybridObject;
     }
   );

@@ -19,22 +19,22 @@
 #include <NitroModules/JNISharedPtr.hpp>
 #include <NitroModules/DefaultConstructableObject.hpp>
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
 int initialize(JavaVM* vm) {
   using namespace margelo::nitro;
-  using namespace margelo::nitro::biolink::native;
+  using namespace margelo::nitro::biolink;
   using namespace facebook;
 
   return facebook::jni::initialize(vm, [] {
     // Register native JNI methods
-    margelo::nitro::biolink::native::JHybridBiolinkCoreSpec::registerNatives();
+    margelo::nitro::biolink::JHybridBiolinkCoreSpec::registerNatives();
 
     // Register Nitro Hybrid Objects
     HybridObjectRegistry::registerHybridObjectConstructor(
       "BiolinkCore",
       []() -> std::shared_ptr<HybridObject> {
-        static DefaultConstructableObject<JHybridBiolinkCoreSpec::javaobject> object("com/margelo/nitro/biolink/native/HybridBiolinkCore");
+        static DefaultConstructableObject<JHybridBiolinkCoreSpec::javaobject> object("com/margelo/nitro/biolink/HybridBiolinkCore");
         auto instance = object.create();
         auto globalRef = jni::make_global(instance);
         return JNISharedPtr::make_shared_from_jni<JHybridBiolinkCoreSpec>(globalRef);
@@ -43,4 +43,4 @@ int initialize(JavaVM* vm) {
   });
 }
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink
