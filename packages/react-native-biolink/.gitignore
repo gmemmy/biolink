@@ -15,4 +15,4 @@ coverage/
 *.swp
 *.swo
 *~ 
-/.cxx/
+android/.cxx/

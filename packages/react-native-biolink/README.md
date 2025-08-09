@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink.svg)](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This document provides the complete API reference and developer guide for `@gmemmy/react-native-biolink`, a fast biometric authentication and secure storage module for React Native's New Architecture. For a high-level overview of the project, including features, roadmap, and general requirements, please refer to the [main project README](../../README.md).
+This document provides the API reference and developer guide for `@gmemmy/react-native-biolink`, a biometric authentication and secure storage module for React Native’s New Architecture. For a high-level overview of the project, including features, roadmap, and general requirements, please refer to the [main project README](../../README.md).
 
 ## Installation
 

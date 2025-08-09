@@ -63,6 +63,7 @@ ios/Pods/
 android/app/build/
 android/.gradle/
 android/local.properties
+**/.cxx/
 
 # Temporary files
 *.tmp
