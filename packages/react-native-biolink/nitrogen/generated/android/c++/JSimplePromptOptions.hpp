@@ -13,7 +13,7 @@
 #include <optional>
 #include <string>
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   using namespace facebook;
 
@@ -22,7 +22,7 @@ namespace margelo::nitro::biolink::native {
    */
   struct JSimplePromptOptions final: public jni::JavaClass<JSimplePromptOptions> {
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/native/SimplePromptOptions;";
+    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/SimplePromptOptions;";
 
   public:
     /**
@@ -55,4 +55,4 @@ namespace margelo::nitro::biolink::native {
     }
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

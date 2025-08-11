@@ -7,7 +7,7 @@
 
 #include "HybridBiolinkCoreSpec.hpp"
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   void HybridBiolinkCoreSpec::loadHybridMethods() {
     // load base methods/properties
@@ -26,4 +26,4 @@ namespace margelo::nitro::biolink::native {
     });
   }
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

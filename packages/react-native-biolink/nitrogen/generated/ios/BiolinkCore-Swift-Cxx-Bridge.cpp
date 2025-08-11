@@ -11,7 +11,7 @@
 #include "BiolinkCore-Swift-Cxx-Umbrella.hpp"
 #include "HybridBiolinkCoreSpecSwift.hpp"
 
-namespace margelo::nitro::biolink::native::bridge::swift {
+namespace margelo::nitro::biolink::bridge::swift {
 
   // pragma MARK: std::function<void(bool /* result */)>
   Func_void_bool create_Func_void_bool(void* _Nonnull swiftClosureWrapper) {
@@ -61,13 +61,13 @@ namespace margelo::nitro::biolink::native::bridge::swift {
     };
   }
   
-  // pragma MARK: std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec>
-  std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpec> create_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(void* _Nonnull swiftUnsafePointer) {
+  // pragma MARK: std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec>
+  std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpec> create_std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_(void* _Nonnull swiftUnsafePointer) {
     BiolinkCore::HybridBiolinkCoreSpec_cxx swiftPart = BiolinkCore::HybridBiolinkCoreSpec_cxx::fromUnsafe(swiftUnsafePointer);
-    return std::make_shared<margelo::nitro::biolink::native::HybridBiolinkCoreSpecSwift>(swiftPart);
+    return std::make_shared<margelo::nitro::biolink::HybridBiolinkCoreSpecSwift>(swiftPart);
   }
-  void* _Nonnull get_std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_(std__shared_ptr_margelo__nitro__biolink__native__HybridBiolinkCoreSpec_ cppType) {
-    std::shared_ptr<margelo::nitro::biolink::native::HybridBiolinkCoreSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::biolink::native::HybridBiolinkCoreSpecSwift>(cppType);
+  void* _Nonnull get_std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_(std__shared_ptr_margelo__nitro__biolink__HybridBiolinkCoreSpec_ cppType) {
+    std::shared_ptr<margelo::nitro::biolink::HybridBiolinkCoreSpecSwift> swiftWrapper = std::dynamic_pointer_cast<margelo::nitro::biolink::HybridBiolinkCoreSpecSwift>(cppType);
   #ifdef NITRO_DEBUG
     if (swiftWrapper == nullptr) [[unlikely]] {
       throw std::runtime_error("Class \"HybridBiolinkCoreSpec\" is not implemented in Swift!");
@@ -77,4 +77,4 @@ namespace margelo::nitro::biolink::native::bridge::swift {
     return swiftPart.toUnsafe();
   }
 
-} // namespace margelo::nitro::biolink::native::bridge::swift
+} // namespace margelo::nitro::biolink::bridge::swift

@@ -9,13 +9,13 @@
 
 // Forward declarations of C++ defined types
 // Forward declaration of `BiometryType` to properly resolve imports.
-namespace margelo::nitro::biolink::native { enum class BiometryType; }
+namespace margelo::nitro::biolink { enum class BiometryType; }
 // Forward declaration of `HybridBiolinkCoreSpec` to properly resolve imports.
-namespace margelo::nitro::biolink::native { class HybridBiolinkCoreSpec; }
+namespace margelo::nitro::biolink { class HybridBiolinkCoreSpec; }
 // Forward declaration of `SensorAvailability` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+namespace margelo::nitro::biolink { struct SensorAvailability; }
 // Forward declaration of `SimplePromptOptions` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
+namespace margelo::nitro::biolink { struct SimplePromptOptions; }
 
 // Include C++ defined types
 #include "BiometryType.hpp"

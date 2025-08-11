@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "React Native Biolink",
   "private": true,
-  "type": "module",
   "workspaces": [
     "packages/*"
   ],
@@ -14,12 +13,14 @@
     "format": "prettier --write . --config config/.prettierrc",
     "format:check": "prettier --check . --config config/.prettierrc",
     "test": "pnpm -r run test",
+    "ci": "pnpm -r run build && pnpm -r run check-format && pnpm -r run test",
     "clean": "pnpm -r run clean",
+    "clean:git": "git clean -fdX",
     "prepare": "husky install",
     "demo:start": "cd packages/biolink-demo && npx react-native start --reset-cache",
-    "demo:ios": "cd packages/biolink-demo && npx react-native run-ios",
-    "demo:android": "cd packages/biolink-demo && npx react-native run-android",
-    "demo:pods": "cd packages/biolink-demo/ios && pod install"
+    "demo:ios": "cd biolink-demo && npx react-native run-ios",
+    "demo:android": "cd biolink-demo && npx react-native run-android",
+    "demo:pods": "cd biolink-demo/ios && pod install"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

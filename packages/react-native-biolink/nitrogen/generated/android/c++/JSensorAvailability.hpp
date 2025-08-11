@@ -13,7 +13,7 @@
 #include "BiometryType.hpp"
 #include "JBiometryType.hpp"
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   using namespace facebook;
 
@@ -22,7 +22,7 @@ namespace margelo::nitro::biolink::native {
    */
   struct JSensorAvailability final: public jni::JavaClass<JSensorAvailability> {
   public:
-    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/native/SensorAvailability;";
+    static auto constexpr kJavaDescriptor = "Lcom/margelo/nitro/biolink/SensorAvailability;";
 
   public:
     /**
@@ -55,4 +55,4 @@ namespace margelo::nitro::biolink::native {
     }
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

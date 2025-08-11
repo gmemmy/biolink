@@ -5,7 +5,7 @@
 /// Copyright © 2025 Marc Rousavy @ Margelo
 ///
 
-package com.margelo.nitro.biolink.native
+package com.margelo.nitro.biolink
 
 import android.util.Log
 

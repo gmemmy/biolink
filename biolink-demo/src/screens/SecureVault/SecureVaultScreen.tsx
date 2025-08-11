@@ -13,7 +13,6 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { BlurView } from '@react-native-community/blur';
 import {
   authenticate,
   storeSecret,
@@ -313,10 +312,15 @@ export default function SecureVaultScreen() {
       {vaultState === 'editing' && renderEditingState()}
       {vaultState === 'unlocking' && (
         <View style={styles.fullScreenOverlay}>
-          <BlurView
-            style={styles.blurOverlay}
-            blurType={isDarkMode ? 'dark' : 'light'}
-            blurAmount={10}
+          <View
+            style={[
+              styles.blurOverlay,
+              {
+                backgroundColor: isDarkMode
+                  ? 'rgba(0, 0, 0, 0.8)'
+                  : 'rgba(255, 255, 255, 0.8)',
+              },
+            ]}
           >
             <View style={styles.loadingContainer}>
               <ActivityIndicator size="large" color="#007AFF" />
@@ -329,7 +333,7 @@ export default function SecureVaultScreen() {
                 Authenticating...
               </Text>
             </View>
-          </BlurView>
+          </View>
         </View>
       )}
     </ScrollView>

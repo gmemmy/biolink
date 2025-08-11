@@ -19,11 +19,11 @@
 #endif
 
 // Forward declaration of `BiometryType` to properly resolve imports.
-namespace margelo::nitro::biolink::native { enum class BiometryType; }
+namespace margelo::nitro::biolink { enum class BiometryType; }
 
 #include "BiometryType.hpp"
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   /**
    * A struct which can be represented as a JavaScript object (SensorAvailability).
@@ -38,11 +38,11 @@ namespace margelo::nitro::biolink::native {
     explicit SensorAvailability(bool available, BiometryType biometryType): available(available), biometryType(biometryType) {}
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink
 
 namespace margelo::nitro {
 
-  using namespace margelo::nitro::biolink::native;
+  using namespace margelo::nitro::biolink;
 
   // C++ SensorAvailability <> JS SensorAvailability (object)
   template <>

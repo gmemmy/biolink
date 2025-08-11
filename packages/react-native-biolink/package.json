@@ -4,9 +4,8 @@
   "description": "React Native biometric authentication and secure storage library using Nitro modules for bridge-free native communication",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
-  "type": "module",
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc --project tsconfig.json",
     "clean": "rm -rf dist nitrogen/generated",
     "codegen": "nitro-codegen",
     "lint": "eslint src --config ../../config/eslint.config.js",
@@ -51,6 +50,9 @@
     "dist/specs",
     "ios",
     "android",
+    "android/build.gradle",
+    "android/CMakeLists.txt",
+    "android/gradle.properties",
     "nitrogen",
     "react-native-biolink.podspec"
   ],

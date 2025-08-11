@@ -4,22 +4,22 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator='iPhone 16 Pro Max'",
     "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest --passWithNoTests"
+    "start": "react-native start --reset-cache --client-logs",
+    "test": "jest --passWithNoTests",
+    "pod-install": "cd ios && bundle install && bundle exec pod install"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
     "@gmemmy/react-native-biolink": "workspace:*",
-    "@react-native-community/blur": "^4.4.1",
-    "@react-native/codegen": "0.81.0-rc.0",
-    "@react-native/gradle-plugin": "0.81.0-rc.0",
+    "@react-native/gradle-plugin": "0.80.1",
+    "@react-native/codegen": "0.80.1",
     "@react-navigation/bottom-tabs": "^7.4.2",
     "@react-navigation/native": "^7.1.14",
     "react": "19.1.0",
-    "react-native": "0.81.0-rc.0",
-    "react-native-nitro-modules": "^0.26.3",
+    "react-native": "0.80.1",
+    "react-native-nitro-modules": "^0.26.4",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.13.1",
     "react-native-vector-icons": "^10.2.0"

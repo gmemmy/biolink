@@ -14,9 +14,9 @@
 #endif
 
 // Forward declaration of `SensorAvailability` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SensorAvailability; }
+namespace margelo::nitro::biolink { struct SensorAvailability; }
 // Forward declaration of `SimplePromptOptions` to properly resolve imports.
-namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
+namespace margelo::nitro::biolink { struct SimplePromptOptions; }
 
 #include <NitroModules/Promise.hpp>
 #include <optional>
@@ -24,7 +24,7 @@ namespace margelo::nitro::biolink::native { struct SimplePromptOptions; }
 #include "SensorAvailability.hpp"
 #include "SimplePromptOptions.hpp"
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   using namespace margelo::nitro;
 
@@ -74,4 +74,4 @@ namespace margelo::nitro::biolink::native {
       static constexpr auto TAG = "BiolinkCore";
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink

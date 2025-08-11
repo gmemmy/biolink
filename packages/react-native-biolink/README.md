@@ -4,40 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink.svg)](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A fast biometric authentication and secure storage module for React Native's new architecture, built on Nitro Modules, with PIN authentication and device credential fallback.
-
-> **📖 Developer Documentation** - This is the complete API reference and developer guide. For a quick overview, see the [README](../../README.md).
-
-## Current Features (v1.0)
-
-- ⚡ **Biometric Authentication** - Face ID, Touch ID, and device credentials
-- 🔒 **Secure Storage** - Platform-specific secure storage (iOS Keychain, Android Keystore)
-- 🔐 **PIN Authentication** - Fallback PIN with lockout protection and device credential fallback
-- ✍️ **Digital Signing** - Hardware-backed RSA key generation and signature creation
-- ⚡ **Bridge-Free** - Direct native communication using Nitro modules for maximum performance
-- 🎯 **TypeScript** - Full TypeScript support with comprehensive types
-- 📱 **Cross-Platform** - iOS and Android support
-- 🚀 **Performance Optimized** - Cached operations and minimal overhead
-- 🔄 **React Hooks** - Built-in `useAuth` hook for easy integration
-
-## Roadmap
-
-### Phase 6: DX Tooling & Reliability
-
-- **Expo Config Plugin** - Zero-config setup for Expo projects
-- **Enhanced Documentation** - Migration guides and advanced recipes
-
-### Phase 7: Advanced Security & Observability
-
-- **FIDO2/WebAuthn Passkeys** - Full passkey support with RP ID validation
-- **Analytics & Observability** - Built-in event tracking and audit logging
-
-## Requirements
-
-- React Native >= 0.74.0 (New Architecture required)
-- iOS >= 13.0
-- Android API >= 23
-- Node.js >= 18.0.0
+This document provides the API reference and developer guide for `@gmemmy/react-native-biolink`, a biometric authentication and secure storage module for React Native’s New Architecture. For a high-level overview of the project, including features, roadmap, and general requirements, please refer to the [main project README](../../README.md).
 
 ## Installation
 
@@ -62,6 +29,7 @@ import {
   getSignatureHeaders,
   useAuth
 } from '@gmemmy/react-native-biolink';
+import { TouchableOpacity, Text } from 'react-native'; // Import for React Native components
 
 // Biometric authentication with device fallback
 const isAuthenticated = await authenticate(true);
@@ -82,9 +50,9 @@ function MyComponent() {
   };
 
   return (
-    <button onClick={handleLogin} disabled={isLoading}>
-      {isAuthenticated ? 'Authenticated' : 'Login'}
-    </button>
+    <TouchableOpacity onPress={handleLogin} disabled={isLoading}>
+      <Text>{isAuthenticated ? 'Authenticated' : 'Login'}</Text>
+    </TouchableOpacity>
   );
 }
 ```
@@ -93,9 +61,9 @@ function MyComponent() {
 
 ### Authentication
 
-#### `authenticate(fallbackToDeviceCredential?)`
+#### `authenticate(fallbackToDeviceCredential?: boolean)`
 
-Authenticate using biometrics with optional device credential fallback.
+Authenticates the user using biometrics (Face ID, Touch ID, Fingerprint). If `fallbackToDeviceCredential` is set to `true`, the system will allow the user to fall back to their device PIN, pattern, or password if biometrics are not available or fail.
 
 ```typescript
 // Biometric only
@@ -116,18 +84,20 @@ const { isAuthenticated, authenticate, isLoading, error, clearError, reset } =
 
 ### Secure Storage
 
-#### `storeSecret(key, value)`
+#### `storeSecret(key: string, value: string)`
 
-Store a value securely using platform-specific storage.
+Stores a `value` securely using platform-specific storage (iOS Keychain, Android Keystore) associated with a given `key`.
+
+> **Note**: While the library handles encryption, it's generally recommended to keep stored secrets concise. Avoid storing extremely large data blobs.
 
 ```typescript
 await storeSecret('user-token', 'your-secure-token');
 await storeSecret('user-preferences', JSON.stringify({ theme: 'dark' }));
 ```
 
-#### `getSecret(key)`
+#### `getSecret(key: string)`
 
-Retrieve a securely stored value.
+Retrieves a securely stored value associated with a given `key` from platform-specific storage.
 
 ```typescript
 const token = await getSecret('user-token');
@@ -144,9 +114,9 @@ Set a PIN for fallback authentication with lockout protection.
 await enrollPin('123456');
 ```
 
-#### `authenticateWithPin(pin)`
+#### `authenticateWithPin(pin: string)`
 
-Authenticate using PIN with automatic lockout on failed attempts.
+Authenticates the user using a previously enrolled PIN. This function includes automatic lockout on failed attempts.
 
 ```typescript
 try {
@@ -157,9 +127,17 @@ try {
     console.log('PIN is locked, try again later');
   } else if (error.code === 'PIN_INCORRECT') {
     console.log(`${error.remainingAttempts} attempts remaining`);
+  } else {
+    console.error('Authentication failed:', error.message);
   }
 }
 ```
+
+> **Error Codes for `authenticateWithPin`**:
+>
+> - `PIN_LOCKED`: The PIN is temporarily locked due to too many failed attempts. Check `getPinLockoutStatus()` for details.
+> - `PIN_INCORRECT`: The provided PIN is incorrect. The error object will contain `remainingAttempts`.
+> - Other errors: General authentication failures.
 
 #### `getPinLockoutStatus()`
 
@@ -184,9 +162,11 @@ await clearPinLockout();
 
 ### Digital Signing
 
-#### `getSignatureHeaders(body, headerName?)`
+Digital signing uses hardware-backed keys to create cryptographic signatures for data, ensuring its integrity and authenticity. This is useful for verifying that data has not been tampered with and originates from a trusted source.
 
-Generate signed headers for API requests.
+#### `getSignatureHeaders(body: object, headerName?: string)`
+
+Generates a cryptographic signature for the provided `body` object using a hardware-backed key and returns it as an HTTP header. This ensures the integrity and authenticity of the data sent in API requests.
 
 ```typescript
 const headers = await getSignatureHeaders({ userId: 123, action: 'login' });
@@ -203,9 +183,9 @@ const response = await fetch('/api/authenticate', {
 });
 ```
 
-#### `getSignatureHeadersWithPublicKey(body, includePublicKey?)`
+#### `getSignatureHeadersWithPublicKey(body: object, includePublicKey?: boolean)`
 
-Generate signed headers with public key included.
+Generates a cryptographic signature for the provided `body` object and includes the public key in the returned HTTP headers. This allows the recipient to verify the signature and the origin of the data.
 
 ```typescript
 const headers = await getSignatureHeadersWithPublicKey({ userId: 123 });

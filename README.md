@@ -1,57 +1,54 @@
-# React Native Biolink
+## React Native Biolink
 
 [![CI](https://github.com/gmemmy/biolink/workflows/CI/badge.svg)](https://github.com/gmemmy/biolink/actions)
 [![npm version](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink.svg)](https://badge.fury.io/js/%40gmemmy%2Freact-native-biolink)
 [![License](https://img.shields.io/badge/License-MIT-green?style=flat)](LICENSE)
 
-A high-performance biometric authentication and secure storage library built on [Nitro Modules](https://nitro.margelo.com) for React Native's New Architecture. Unlike bridge-based libraries, Biolink uses Nitro's JSI implementation for **near-zero latency** native communication.
+Biolink adds biometric authentication, secure storage, and hardware-backed signing to React Native apps using the New Architecture. It is powered by Nitro Modules for direct JSI communication—no traditional bridge.
 
-## NPM Package
+### Quick links
 
-**[@gmemmy/react-native-biolink](https://www.npmjs.com/package/@gmemmy/react-native-biolink)**
+- **Package**: [`@gmemmy/react-native-biolink`](https://www.npmjs.com/package/@gmemmy/react-native-biolink)
+- **API & Usage**: [`packages/react-native-biolink/README.md`](./packages/react-native-biolink/README.md)
+- **Demo App**: [`biolink-demo/README.md`](./biolink-demo/README.md)
+- **Issues**: [`github.com/gmemmy/biolink/issues`](https://github.com/gmemmy/biolink/issues)
+- **Discussions**: [`github.com/gmemmy/biolink/discussions`](https://github.com/gmemmy/biolink/discussions)
+- **Contributing**: [`CONTRIBUTING.md`](./CONTRIBUTING.md)
+
+## Installation
+
+This library requires `react-native-nitro-modules`.
 
 ```bash
-npm install @gmemmy/react-native-biolink react-native-nitro-modules
-# or
 pnpm add @gmemmy/react-native-biolink react-native-nitro-modules
-# or
-yarn add @gmemmy/react-native-biolink react-native-nitro-modules
 ```
-
-### Current Features (v1.0)
-
-- **Bridge-Free**: Direct JSI communication with near-zero latency
-- **Hardware-Backed Security**: Secure Enclave (iOS) and TEE Keystore (Android)
-- **Biometric Authentication**: Face ID, Touch ID, and device credentials
-- **Secure Storage**: Platform-specific secure storage (iOS Keychain, Android Keystore)
-- **PIN Authentication**: Fallback PIN with lockout protection
-- **Digital Signing**: Hardware-backed RSA key generation and signature creation
-- **Cross-Platform**: iOS and Android support
-- **React Hooks**: Built-in `useAuth` hook for easy integration
-
-### Coming Soon
-
-- **FIDO2/WebAuthn Passkeys**: Full passkey support with RP ID validation
-- **Analytics & Observability**: Built-in event tracking and audit logging
-- **Expo Config Plugin**: Zero-config setup for Expo projects
 
 ## Requirements
 
-- **React Native** ≥ 0.74 (New Architecture required)
-- **react-native-nitro-modules**
+- **React Native** ≥ 0.74 with the New Architecture enabled
 - **iOS** 13+ (Secure Enclave)
-- **Android** API 23+ (Biometric API)
+- **Android** API 23+ (Biometric API / Keystore)
 
-For complete usage examples, API documentation, and advanced features, see the **[📖 Package Documentation](./packages/react-native-biolink/README.md)**.
+## Features
 
-## Documentation
+- **Bridge-free**: Direct JSI via Nitro Modules
+- **Hardware-backed security**: Secure Enclave (iOS) and Android Keystore
+- **Biometric authentication**: Face ID, Touch ID, and device credentials
+- **Secure storage**: Keychain (iOS) and Keystore (Android)
+- **PIN fallback**: PIN auth with automatic lockout
+- **Digital signing**: Hardware-backed keys for request signing
 
-- **[📖 Full API Documentation](./packages/react-native-biolink/README.md)** - Complete API reference, examples, and advanced usage
-- **[📱 Demo App](./biolink-demo/README.md)** - See the library in action
-- **[🐛 Issues](https://github.com/gmemmy/biolink/issues)** - Report bugs and request features
-- **[💬 Discussions](https://github.com/gmemmy/biolink/discussions)** - Ask questions and share ideas
-- **[📋 Contributing Guide](https://github.com/gmemmy/biolink/blob/main/CONTRIBUTING.md)** - How to contribute to the project
+## Roadmap
+
+- **FIDO2/WebAuthn passkeys**
+- **Analytics & observability**
+- **Expo config plugin**
+
+## Monorepo
+
+- `packages/react-native-biolink`: The library source
+- `biolink-demo`: Demo app showcasing the library
 
 ## License
 
-MIT License - see [LICENSE](./LICENSE) for details.
+MIT — see [`LICENSE`](./LICENSE).

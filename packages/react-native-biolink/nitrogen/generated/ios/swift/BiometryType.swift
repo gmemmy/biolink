@@ -8,7 +8,7 @@
 /**
  * Represents the JS union `BiometryType`, backed by a C++ enum.
  */
-public typealias BiometryType = margelo.nitro.biolink.native.BiometryType
+public typealias BiometryType = margelo.nitro.biolink.BiometryType
 
 public extension BiometryType {
   /**

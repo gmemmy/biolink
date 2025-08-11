@@ -1,50 +1,40 @@
-# Biolink Demo App
+## Biolink Demo App
 
-A minimal React Native demo app showcasing the current features of the Biolink biometric authentication library.
+A React Native app that showcases the Biolink library: biometrics, secure storage, PIN fallback, and hardware-backed signing.
 
-## Current Features (v1.0)
+## Features
 
-- **Biometric Authentication**: Demonstrates `signInWithBiometrics()` function with device credential fallback
-- **Secure Storage**: Store and retrieve secrets using platform-specific secure storage
-- **PIN Authentication**: Complete enrollment and lockout flow with automatic retry limits
-- **Digital Signing**: Hardware-backed signature generation for API requests
+- **Biometric authentication** with optional device credential fallback
+- **Secure storage** via Keychain/Keystore
+- **PIN authentication** with enrollment and lockout
+- **Digital signing** for API requests
 
 ## Screenshots
 
 ### 🔐 Biometric Authentication
 
-<img width="400" height="950" alt="Biometric Authentication" src="https://github.com/user-attachments/assets/02cfe75f-600a-4477-807f-bbda494831c4" />
+![Android](https://github.com/user-attachments/assets/7aa03529-9024-4627-b3d1-0267e5037a18)
+![iOS](https://github.com/user-attachments/assets/6a9ac49a-be51-4e65-832d-1953dd6c0cfc)
 
-<img width="400" height="950" alt="Biometric Authentication Successful" src="https://github.com/user-attachments/assets/9617be21-4f8c-4a94-b1d7-ec626512547e" />
+## Built with
 
-### 🔢 Custom PIN Authentication
+- **React Native 0.80.1** (New Architecture)
+- **React 19.1.0**
+- **TypeScript**
+- **@gmemmy/react-native-biolink** (library)
+- **react-native-nitro-modules** (JSI)
+- **react-native-safe-area-context**
 
-<img width="400" height="950" alt="Custom PIN Authentication" src="https://github.com/user-attachments/assets/fdd3521d-c232-4926-802f-bf6e7363b1e0" />
-
-<img width="400" height="950" alt="Custom PIN lockout" src="https://github.com/user-attachments/assets/195e8e26-bb8d-4eef-a6f7-956ffcccf406" />
-
-## Built With
-
-- **React Native 0.81.0-rc.0**: Latest React Native with new architecture
-- **React 19.1.0**: Latest React with concurrent features
-- **TypeScript**: Full type safety
-- **react-native-biolink**: Custom biometric authentication library
-- **react-native-nitro-modules**: JSI-powered native modules
-- **react-native-safe-area-context**: Safe area handling
-
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
-- React Native development environment
-- iOS/Android development tools
+- React Native dev environment (iOS/Android)
 - Node.js 18+
-- pnpm package manager
+- pnpm
 - React Native 0.74+ with New Architecture enabled
 
-### Installation
-
-From the workspace root:
+### Install & build (from workspace root)
 
 ```bash
 # Install dependencies
@@ -53,48 +43,44 @@ pnpm install
 # Build the library
 pnpm build
 
-# Generate native bindings
+# Generate native bindings for the library
 cd packages/react-native-biolink && pnpm codegen && cd ../..
 ```
 
-### Running the Demo
+### Run the demo
 
 #### iOS
 
 ```bash
-cd packages/biolink-demo
+cd biolink-demo
 npx react-native run-ios
 ```
 
 #### Android
 
 ```bash
-cd packages/biolink-demo
+cd biolink-demo
 npx react-native run-android
 ```
 
 ### Development
 
-Start the Metro bundler:
+Start Metro from the repo root or the app folder:
 
 ```bash
 npx react-native start
 ```
 
-## How It Works
+## What’s inside
 
-The demo app demonstrates:
+- **Carousel navigation** to explore each capability
+- **Biometric auth**: "Biometrics only" and "Biometrics + Device PIN"
+- **Secure storage** examples
+- **PIN flow**: enroll, authenticate, lockout
+- **Digital signing**: create signed headers for API calls
 
-1. **Carousel Navigation**: Swipe or use navigation buttons to explore features
-2. **Biometric Authentication**: Two buttons - "Biometrics Only" and "Biometrics + Device PIN"
-3. **Secure Storage**: Store and retrieve secrets using platform-specific secure storage
-4. **PIN Authentication**: Enroll, authenticate, and test lockout functionality
-5. **Digital Signing**: Generate signed headers for API requests
+## Planned additions
 
-## Future Features
-
-The demo will be expanded to showcase:
-
-- **FIDO2/WebAuthn Passkeys**: Full passkey authentication flows
-- **Analytics Integration**: Event tracking and audit logging
-- **Advanced Security**: Multi-factor authentication and compliance features
+- **FIDO2/WebAuthn passkeys**
+- **Analytics & audit logging**
+- **Advanced security** (MFA, compliance)

@@ -23,7 +23,7 @@
 #include <optional>
 #include <string>
 
-namespace margelo::nitro::biolink::native {
+namespace margelo::nitro::biolink {
 
   /**
    * A struct which can be represented as a JavaScript object (SimplePromptOptions).
@@ -38,11 +38,11 @@ namespace margelo::nitro::biolink::native {
     explicit SimplePromptOptions(std::optional<std::string> promptMessage, std::optional<std::string> cancelButtonText): promptMessage(promptMessage), cancelButtonText(cancelButtonText) {}
   };
 
-} // namespace margelo::nitro::biolink::native
+} // namespace margelo::nitro::biolink
 
 namespace margelo::nitro {
 
-  using namespace margelo::nitro::biolink::native;
+  using namespace margelo::nitro::biolink;
 
   // C++ SimplePromptOptions <> JS SimplePromptOptions (object)
   template <>

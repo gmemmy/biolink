@@ -12,7 +12,7 @@ import NitroModules
  * This class can be used from C++, e.g. to wrap the Swift closure as a `std::function`.
  */
 public final class Func_void_bool {
-  public typealias bridge = margelo.nitro.biolink.native.bridge.swift
+  public typealias bridge = margelo.nitro.biolink.bridge.swift
 
   private let closure: (_ value: Bool) -> Void
 
