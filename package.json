@@ -13,6 +13,7 @@
     "format": "prettier --write . --config config/.prettierrc",
     "format:check": "prettier --check . --config config/.prettierrc",
     "test": "pnpm -r run test",
+    "docs:test": "jest __tests__/docs --testPathPattern=__tests__/docs",
     "ci": "pnpm -r run build && pnpm -r run check-format && pnpm -r run test",
     "clean": "pnpm -r run clean",
     "clean:git": "git clean -fdX",
@@ -23,6 +24,7 @@
     "demo:pods": "cd biolink-demo/ios && pod install"
   },
   "devDependencies": {
+    "jest": "^29.0.0",
     "@eslint/js": "^9.0.0",
     "@react-native-community/cli": "^19.1.0",
     "@types/node": "^24.0.14",
